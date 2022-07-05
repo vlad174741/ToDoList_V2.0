@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
    override fun onResume() {
         super.onResume()
-        dbManagerAuth.openDataBase()
         Log.d("idItemSelect", "${Variable.auth}")
         Log.d("idItemSelect", "${Variable.id}")
         Log.d("idItemSelect", "${Variable.email}")

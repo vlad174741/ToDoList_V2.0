@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import com.example.todolist_v20.AuthClass
-import com.example.todolist_v20.MainActivity
 import com.example.todolist_v20.Variable
 import com.example.todolist_v20.ViewModelMy
 import com.example.todolist_v20.databinding.FragmentOptionBinding
@@ -43,7 +42,7 @@ class OptionFragment : Fragment() {
 
             activity!!.finish()
             Variable.auth = false
-            var intentAuth = Intent(activity as AppCompatActivity, AuthClass::class.java)
+            val intentAuth = Intent(activity as AppCompatActivity, AuthClass::class.java)
             startActivity(intentAuth)
         }
     }

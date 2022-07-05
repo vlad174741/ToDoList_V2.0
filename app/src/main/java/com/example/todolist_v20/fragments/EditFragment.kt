@@ -2,7 +2,7 @@ package com.example.todolist_v20.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.inputmethodservice.KeyboardView
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import com.example.todolist_v20.*
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
@@ -44,17 +43,17 @@ class EditFragment : Fragment() {
 
 
 
-    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dbManager = DataBaseManager(activity as AppCompatActivity)
         dbManager.openDataBase()
-
         val hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
 
 
-
+        bindingEditFragment.editTextEditFragmentSubtitle.setOnClickListener {
+            hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
+        }
 
         bindingEditFragment.buttonEditFragment.setOnClickListener{
 

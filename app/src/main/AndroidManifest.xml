@@ -12,13 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList_V20"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        >
 
 
         <activity
             android:name=".EditActivity"
             android:label="@string/option"
             android:parentActivityName=".MainActivity"
+
             />
 
         <activity
