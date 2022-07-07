@@ -2,8 +2,12 @@ package com.example.todolist_v20
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.hardware.biometrics.BiometricPrompt
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -65,8 +69,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

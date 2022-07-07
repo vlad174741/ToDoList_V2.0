@@ -1,8 +1,12 @@
 package com.example.todolist_v20
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -23,7 +27,7 @@ class AuthClass: AppCompatActivity() {
         setContentView(bindingAuth.root)
 
         dbManagerAuth.openDataBase()
-
+        checkBiometric()
 
         bindingAuth.apply {
 
@@ -93,6 +97,10 @@ class AuthClass: AppCompatActivity() {
                 }
 
             }
+
+            buttonFingerPrint.setOnClickListener {
+                fingerPrintDialog()
+            }
         }
 
 
@@ -103,10 +111,86 @@ class AuthClass: AppCompatActivity() {
 
 
 
+
 public override fun onResume() {
         super.onResume()
     }
 
+
+
+    fun checkBiometric(){
+
+        if(packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)){
+
+            bindingAuth.buttonFingerPrint.visibility = View.VISIBLE
+
+        }else{
+
+            bindingAuth.buttonFingerPrint.visibility = View.VISIBLE
+
+        }
+
+    }
+
+    fun fingerPrintDialog(){
+
+
+             val prompt = BiometricPrompt.Builder(this)
+            .setTitle("Авторизация по отпечатку пальца")
+            .setDescription("Используйте свой отпечаток для авторизации")
+            .setNegativeButton("Отмена", mainExecutor,
+                DialogInterface.OnClickListener{ _, _->})
+            .build()
+
+        prompt.authenticate(getCancellationSignal(),mainExecutor,
+            object : BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(this@AuthClass, "Провал" , Toast.LENGTH_LONG).show()
+
+
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+
+                    if (errorCode == 11) {
+                        Toast.makeText(
+                            this@AuthClass,
+                            "Отпечаток не найден",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+
+                        fingerPrintAction()
+
+
+                }
+            }
+        )
+
+    }
+
+    fun fingerPrintAction(){
+        val intentMainActivity = Intent(this@AuthClass, MainActivity::class.java)
+        Toast.makeText(this, "Сканер" , Toast.LENGTH_LONG).show()
+        finish()
+        startActivity(intentMainActivity)
+    }
+
+    private fun getCancellationSignal(): CancellationSignal {
+
+        val cancelSignal = CancellationSignal()
+        cancelSignal.setOnCancelListener {
+
+        }
+        return cancelSignal
+    }
 
 
     override fun onDestroy() {
