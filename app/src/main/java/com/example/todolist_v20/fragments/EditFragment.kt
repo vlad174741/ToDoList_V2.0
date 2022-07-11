@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -49,13 +50,48 @@ class EditFragment : Fragment() {
         dbManager.openDataBase()
         val hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+        bindingEditFragment.textViewTagCardEditFragment.setOnClickListener {
 
+            bindingEditFragment.radioGroupTegEditFragment.clearCheck()
+            bindingEditFragment.textViewTagCardEditFragment.text = "Нет фильтра"
+            Variable.dbTag = "empty"
+
+            if (bindingEditFragment.scrollTagWindowEditFragment.visibility == View.GONE) {
+                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.VISIBLE
+            }else{
+                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.GONE
+            }
+
+
+        }
+
+        bindingEditFragment.apply {
+
+            radioButtonEdritFragmentTagHome.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagHome,Variable.homeTag)
+            }
+            radioButtonEdritFragmentTagShop.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagShop,Variable.shopTag)
+            }
+            radioButtonEdritFragmentTagBank.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagBank,Variable.bankTag)
+            }
+            radioButtonEdritFragmentTagWork.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagWork,Variable.workTag)
+            }
+            radioButtonEdritFragmentTagWeekend.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagWeekend,Variable.weekendTag)
+            }
+            radioButtonEdritFragmentTagSport.setOnClickListener {
+                tagCheck(radioButtonEdritFragmentTagSport,Variable.sportTag)
+            }
+        }
 
         bindingEditFragment.editTextEditFragmentSubtitle.setOnClickListener {
             hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        bindingEditFragment.buttonEditFragment.setOnClickListener{
+        bindingEditFragment.buttonSaveEditFragment.setOnClickListener{
 
             val title = bindingEditFragment.editTextEditFragmentTitle.text
             val subtitle = bindingEditFragment.editTextEditFragmentSubtitle.text
@@ -67,14 +103,22 @@ class EditFragment : Fragment() {
                 hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
                 Variable.tag = title.toString()
 
-                dbManager.insertToDataBase(title.toString(),subtitle.toString())
-                Variable.tag = ""
+                dbManager.insertToDataBase(title.toString(),subtitle.toString(),Variable.dbTag)
+                Variable.dbTag = "empty"
+                bindingEditFragment.textViewTagCardEditFragment.text = "Нет фильтра"
+                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.GONE
                 title.clear()
                 subtitle.clear()
+                bindingEditFragment.radioGroupTegEditFragment.clearCheck()
 
 
 
             }
+
+
+
+
+
             Log.d("id", Variable.tag)
 
 
@@ -84,6 +128,13 @@ class EditFragment : Fragment() {
 
 
 
+    }
+
+    fun tagCheck(button: RadioButton, tag: String){
+        if (button.isChecked) {
+            Variable.dbTag = tag+Variable.username
+            bindingEditFragment.textViewTagCardEditFragment.text = button.text
+        }
     }
 
 

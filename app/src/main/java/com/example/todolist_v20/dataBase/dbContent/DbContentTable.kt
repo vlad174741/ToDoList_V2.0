@@ -7,6 +7,7 @@ object DbContentTable {
     const val TABLE_NAME = "content_table"
     const val COLUMN_TITLE = "title"
     const val COLUMN_SUBTITLE = "subtitle"
+    const val COLUMN_TAGS = "tag"
     const val COLUMN_ACCOUNTS = "account"
 
     const val DATABASE_VERSION = 1
@@ -16,6 +17,7 @@ object DbContentTable {
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
             "$COLUMN_TITLE TEXT," +
             "$COLUMN_SUBTITLE TEXT," +
+            "$COLUMN_TAGS TEXT," +
             "$COLUMN_ACCOUNTS TEXT)"
 
     const val DELETE_TABLE = "DROP TABLE IF NOT EXISTS $TABLE_NAME"

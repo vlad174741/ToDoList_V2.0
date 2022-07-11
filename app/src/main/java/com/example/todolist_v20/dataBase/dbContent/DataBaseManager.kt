@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import android.text.Selection
 import com.example.todolist_v20.Variable
 import com.example.todolist_v20.dataClass.DataRcView
 
@@ -20,12 +21,13 @@ class DataBaseManager(context: Context) {
 
     }
 
-    fun insertToDataBase(title: String, subtitle: String,){
+    fun insertToDataBase(title: String, subtitle: String, tag: String){
 
         val values = ContentValues().apply {
 
             put(DbContentTable.COLUMN_TITLE, title)
             put(DbContentTable.COLUMN_SUBTITLE, subtitle)
+            put(DbContentTable.COLUMN_TAGS, tag)
             put(DbContentTable.COLUMN_ACCOUNTS, Variable.email)
 
 
@@ -54,10 +56,9 @@ class DataBaseManager(context: Context) {
 
 
     @SuppressLint("Range")
-    fun readDataBase(String: String): ArrayList<DataRcView>{
+    fun readDataBase(String: String,selection: String): ArrayList<DataRcView>{
 
         val dataList = ArrayList<DataRcView>()
-        val selection = "${DbContentTable.COLUMN_ACCOUNTS} like ?"
 
         val cursor = db?.query(
             DbContentTable.TABLE_NAME

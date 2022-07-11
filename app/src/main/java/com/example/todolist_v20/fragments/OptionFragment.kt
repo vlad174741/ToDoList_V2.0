@@ -1,18 +1,22 @@
 package com.example.todolist_v20.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.DialogInterface
 import android.content.Intent
+import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
+import android.os.CancellationSignal
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import com.example.todolist_v20.AuthClass
-import com.example.todolist_v20.Variable
-import com.example.todolist_v20.ViewModelMy
+import com.example.todolist_v20.*
 import com.example.todolist_v20.databinding.FragmentOptionBinding
 
 @SuppressLint("StaticFieldLeak")
@@ -45,7 +49,19 @@ class OptionFragment : Fragment() {
             val intentAuth = Intent(activity as AppCompatActivity, AuthClass::class.java)
             startActivity(intentAuth)
         }
+
+        bindingOptionFragment.buttonLoginFingerprint.setOnClickListener {
+
+            FingerPrint.fingerPrintDialog(activity as AppCompatActivity)
+
+        }
+
+
+
+
     }
+
+
 
     companion object {
 

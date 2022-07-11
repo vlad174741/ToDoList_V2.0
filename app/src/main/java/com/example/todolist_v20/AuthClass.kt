@@ -1,12 +1,11 @@
 package com.example.todolist_v20
 
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
 import android.os.CancellationSignal
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -27,7 +26,10 @@ class AuthClass: AppCompatActivity() {
         setContentView(bindingAuth.root)
 
         dbManagerAuth.openDataBase()
+        SharedPreference.preferenceUsername(this)
+        SharedPreference.preferenceEmail(this)
         checkBiometric()
+
 
         bindingAuth.apply {
 
@@ -178,7 +180,15 @@ public override fun onResume() {
 
     fun fingerPrintAction(){
         val intentMainActivity = Intent(this@AuthClass, MainActivity::class.java)
-        Toast.makeText(this, "Сканер" , Toast.LENGTH_LONG).show()
+
+
+
+
+        Variable.username = SharedPreference.authUsernamePref
+        Variable.email = SharedPreference.authEmailPref
+
+        ToastText.longToast(this,"Здравствуйте ${Variable.username}")
+        Log.d("id", SharedPreference.authUsernamePref)
         finish()
         startActivity(intentMainActivity)
     }
