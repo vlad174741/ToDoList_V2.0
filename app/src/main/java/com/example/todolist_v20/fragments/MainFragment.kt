@@ -143,11 +143,11 @@ class MainFragment : Fragment() {
         super.onResume()
         val dataList = dbManager.readDataBase(Variable.email, VariableDBcontent.selectionColunmnAccount)
 
-        when (Variable.check){
-            1->
-                bindingMainFragment.button.visibility = View.VISIBLE
-            0->
-                bindingMainFragment.button.visibility = View.GONE
+        if (Variable.check==1) {
+            Variable.check = 0
+            bindingMainFragment.button.visibility = View.VISIBLE
+        }else{
+            bindingMainFragment.button.visibility = View.GONE
         }
         Log.d("id", Variable.email)
         rcAdapter.updateAdapter(dataList)
