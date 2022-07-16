@@ -12,7 +12,7 @@ class DataBaseManager(context: Context) {
 
     private val dbHelper = DataBaseHelper(context)
     private val dbContentTable = DbContentTable
-    var db: SQLiteDatabase? = null
+    private var db: SQLiteDatabase? = null
 
     fun openDataBase(){
 
@@ -24,35 +24,35 @@ class DataBaseManager(context: Context) {
 
         val values = ContentValues().apply {
 
-            put(DbContentTable.COLUMN_TITLE, title)
-            put(DbContentTable.COLUMN_SUBTITLE, subtitle)
-            put(DbContentTable.COLUMN_TAGS, tag)
-            put(DbContentTable.COLUMN_IMAGE_URI, img)
-            put(DbContentTable.COLUMN_ACCOUNTS, Variable.email)
+            put(dbContentTable.COLUMN_TITLE, title)
+            put(dbContentTable.COLUMN_SUBTITLE, subtitle)
+            put(dbContentTable.COLUMN_TAGS, tag)
+            put(dbContentTable.COLUMN_IMAGE_URI, img)
+            put(dbContentTable.COLUMN_ACCOUNTS, Variable.email)
 
 
         }
-        db?. insert(DbContentTable.TABLE_NAME,null, values)
+        db?. insert(dbContentTable.TABLE_NAME,null, values)
     }
 
     fun updateToDataBase(title: String, subtitle: String, id: Int, tag: String, img: String){
 
         val selection = BaseColumns._ID + "=$id"
-        db?.delete(DbContentTable.TABLE_NAME, selection, null)
+        db?.delete(dbContentTable.TABLE_NAME, selection, null)
 
 
         val values = ContentValues().apply {
 
-            put(DbContentTable.COLUMN_TITLE, title)
-            put(DbContentTable.COLUMN_SUBTITLE, subtitle)
-            put(DbContentTable.COLUMN_TAGS, tag)
-            put(DbContentTable.COLUMN_IMAGE_URI, img)
-            put(DbContentTable.COLUMN_ACCOUNTS, Variable.email)
+            put(dbContentTable.COLUMN_TITLE, title)
+            put(dbContentTable.COLUMN_SUBTITLE, subtitle)
+            put(dbContentTable.COLUMN_TAGS, tag)
+            put(dbContentTable.COLUMN_IMAGE_URI, img)
+            put(dbContentTable.COLUMN_ACCOUNTS, Variable.email)
 
 
 
         }
-        db?. insert(DbContentTable.TABLE_NAME,null, values)
+        db?. insert(dbContentTable.TABLE_NAME,null, values)
     }
 
 
@@ -68,31 +68,31 @@ class DataBaseManager(context: Context) {
             ,null,null,null)
 
 
-            while(cursor?.moveToNext()!!){
+        while(cursor?.moveToNext()!!){
 
-                val  dataTitle = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_TITLE))
+            val  dataTitle = cursor.getString(cursor.getColumnIndex(dbContentTable.COLUMN_TITLE))
 
-                val  dataSubtitle = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_SUBTITLE))
+            val  dataSubtitle = cursor.getString(cursor.getColumnIndex(dbContentTable.COLUMN_SUBTITLE))
 
-                val  dataTag = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_TAGS))
+            val  dataTag = cursor.getString(cursor.getColumnIndex(dbContentTable.COLUMN_TAGS))
 
-                val  dataURI = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_IMAGE_URI))
+            val  dataURI = cursor.getString(cursor.getColumnIndex(dbContentTable.COLUMN_IMAGE_URI))
 
-                val dataID = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
-
-
-                val dataRC = DataRcView()
-                dataRC.title = dataTitle
-                dataRC.subtitle = dataSubtitle
-                dataRC.tag = dataTag
-                dataRC.uri = dataURI
-                dataRC.idItem = dataID
+            val dataID = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
 
 
+            val dataRC = DataRcView()
+            dataRC.title = dataTitle
+            dataRC.subtitle = dataSubtitle
+            dataRC.tag = dataTag
+            dataRC.uri = dataURI
+            dataRC.idItem = dataID
 
-                dataList.add(dataRC)
 
-            }
+
+            dataList.add(dataRC)
+
+        }
         cursor.close()
         return dataList
     }
@@ -104,7 +104,7 @@ class DataBaseManager(context: Context) {
     fun removeItemToDb(id: String) {
 
         val selection = BaseColumns._ID + "=$id"
-        db?.delete(DbContentTable.TABLE_NAME, selection, null)
+        db?.delete(dbContentTable.TABLE_NAME, selection, null)
 
     }
 

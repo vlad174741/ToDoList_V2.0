@@ -1,6 +1,5 @@
 package com.example.todolist_v20.dataBase.dbAuthorization
 
-import android.provider.BaseColumns
 
 object DbAuthorizationTable {
 

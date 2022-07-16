@@ -11,7 +11,7 @@ object FingerPrint {
 
     fun fingerPrintDialog(context: Context) {
 
-        var mainExecutor = ContextWrapper(context)
+        val mainExecutor = ContextWrapper(context)
 
 
         val prompt = BiometricPrompt.Builder(context)

@@ -123,7 +123,7 @@ public override fun onResume() {
 
 
 
-    fun checkBiometric(){
+    private fun checkBiometric(){
 
         if(packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)){
 
@@ -137,15 +137,14 @@ public override fun onResume() {
 
     }
 
-    fun fingerPrintDialog(){
+    private fun fingerPrintDialog(){
 
 
              val prompt = BiometricPrompt.Builder(this)
             .setTitle("Авторизация по отпечатку пальца")
             .setDescription("Используйте свой отпечаток для авторизации")
-            .setNegativeButton("Отмена", mainExecutor,
-                DialogInterface.OnClickListener{ _, _->})
-            .build()
+            .setNegativeButton("Отмена", mainExecutor) { _, _ -> }
+                 .build()
 
         prompt.authenticate(getCancellationSignal(),mainExecutor,
             object : BiometricPrompt.AuthenticationCallback() {

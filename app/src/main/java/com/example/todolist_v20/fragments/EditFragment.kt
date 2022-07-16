@@ -39,7 +39,7 @@ private const val FILE_NAME = "photo.jpg"
 class EditFragment : Fragment() {
     private val model: ViewModelMy by activityViewModels()
 
-    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ it ->
+    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if (it.resultCode == Activity.RESULT_OK && it.data == null ) {
             bindingEditFragment.imageViewFragmentEdit.setImageURI(outputFileUri)
             Variable.imgURI = outputFileUri.toString()

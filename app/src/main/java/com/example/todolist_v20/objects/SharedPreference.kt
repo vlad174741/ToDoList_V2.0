@@ -12,7 +12,7 @@ object SharedPreference {
     fun preferenceUsername(context: Context) {
 
 
-        var sharedPreferences =  ContextWrapper(context)
+        val sharedPreferences =  ContextWrapper(context)
 
         prefsAuthUsername = sharedPreferences.getSharedPreferences("usernamePref", Context.MODE_PRIVATE)
         authUsernamePref = prefsAuthUsername?.getString("usernamePref", "")!!
@@ -24,7 +24,7 @@ object SharedPreference {
     fun preferenceEmail(context: Context) {
 
 
-        var sharedPreferences =  ContextWrapper(context)
+        val sharedPreferences =  ContextWrapper(context)
 
         prefsAuthEmail = sharedPreferences.getSharedPreferences("emailPref", Context.MODE_PRIVATE)
         authEmailPref = prefsAuthEmail?.getString("emailPref", "")!!

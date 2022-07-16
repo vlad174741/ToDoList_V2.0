@@ -17,7 +17,7 @@ import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.adapters.RecyclerViewAdapter
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
-import com.example.todolist_v20.dataBase.dbContent.VariableDBcontent
+import com.example.todolist_v20.dataBase.dbContent.VariableDbContent
 import com.example.todolist_v20.databinding.FragmentMainBinding
 
 @SuppressLint("StaticFieldLeak")
@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
         }
 
         fun rcViewReadDB() {
-            val dataList = dbManager.readDataBase(Variable.email,VariableDBcontent.selectionColunmnAccount)
+            val dataList = dbManager.readDataBase(Variable.email,VariableDbContent.selectionColumnAccount)
             rcAdapter.updateAdapter(dataList)
         }
 
@@ -124,13 +124,13 @@ class MainFragment : Fragment() {
             if (Variable.tag==tag){
                 bindingMainFragment.radioGroupTegEditFragment.clearCheck()
                 Variable.tag = ""
-                val dataList = dbManager.readDataBase(Variable.email, VariableDBcontent.selectionColunmnAccount)
+                val dataList = dbManager.readDataBase(Variable.email, VariableDbContent.selectionColumnAccount)
                 rcAdapter.updateAdapter(dataList)
 
 
             }else {
                 val result = tag + Variable.username
-                val dataList = dbManager.readDataBase(result, VariableDBcontent.selectionColunmnTag)
+                val dataList = dbManager.readDataBase(result, VariableDbContent.selectionColumnTag)
                 rcAdapter.updateAdapter(dataList)
                 Variable.tag = tag
 
@@ -141,7 +141,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val dataList = dbManager.readDataBase(Variable.email, VariableDBcontent.selectionColunmnAccount)
+        val dataList = dbManager.readDataBase(Variable.email, VariableDbContent.selectionColumnAccount)
 
         if (Variable.check==1) {
             Variable.check = 0
