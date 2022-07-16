@@ -1,4 +1,4 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.objects
 
 import android.content.Context
 import android.widget.Toast

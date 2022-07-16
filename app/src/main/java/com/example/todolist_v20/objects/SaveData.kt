@@ -1,9 +1,6 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.objects
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 
 
 class SaveData {

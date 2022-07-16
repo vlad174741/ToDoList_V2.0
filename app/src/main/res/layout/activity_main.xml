@@ -5,4 +5,4 @@
     android:id="@+id/constrain_layout_main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".classes.MainActivity"/>

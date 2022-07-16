@@ -1,6 +1,4 @@
-package com.example.todolist_v20
-
-import com.example.todolist_v20.dataBase.dbContent.DbContentTable
+package com.example.todolist_v20.objects
 
 
 object Variable {
@@ -9,6 +7,7 @@ object Variable {
     var tag = ""
     var email = ""
     var username = ""
+    var imgURI = ""
     var id = 0
 
     //Теги

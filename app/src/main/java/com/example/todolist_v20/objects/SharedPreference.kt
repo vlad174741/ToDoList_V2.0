@@ -1,12 +1,8 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.objects
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.DialogInterface
 import android.content.SharedPreferences
-import android.hardware.biometrics.BiometricPrompt
-import android.os.CancellationSignal
-import android.widget.Toast
 
 object SharedPreference {
 

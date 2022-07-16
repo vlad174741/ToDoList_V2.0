@@ -5,8 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
-import android.text.Selection
-import com.example.todolist_v20.Variable
+import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.dataClass.DataRcView
 
 class DataBaseManager(context: Context) {
@@ -21,13 +20,14 @@ class DataBaseManager(context: Context) {
 
     }
 
-    fun insertToDataBase(title: String, subtitle: String, tag: String){
+    fun insertToDataBase(title: String, subtitle: String, tag: String, img: String){
 
         val values = ContentValues().apply {
 
             put(DbContentTable.COLUMN_TITLE, title)
             put(DbContentTable.COLUMN_SUBTITLE, subtitle)
             put(DbContentTable.COLUMN_TAGS, tag)
+            put(DbContentTable.COLUMN_IMAGE_URI, img)
             put(DbContentTable.COLUMN_ACCOUNTS, Variable.email)
 
 
@@ -35,7 +35,7 @@ class DataBaseManager(context: Context) {
         db?. insert(DbContentTable.TABLE_NAME,null, values)
     }
 
-    fun updateToDataBase(title: String, subtitle: String, id: Int){
+    fun updateToDataBase(title: String, subtitle: String, id: Int, tag: String, img: String){
 
         val selection = BaseColumns._ID + "=$id"
         db?.delete(DbContentTable.TABLE_NAME, selection, null)
@@ -45,6 +45,8 @@ class DataBaseManager(context: Context) {
 
             put(DbContentTable.COLUMN_TITLE, title)
             put(DbContentTable.COLUMN_SUBTITLE, subtitle)
+            put(DbContentTable.COLUMN_TAGS, tag)
+            put(DbContentTable.COLUMN_IMAGE_URI, img)
             put(DbContentTable.COLUMN_ACCOUNTS, Variable.email)
 
 
@@ -72,13 +74,20 @@ class DataBaseManager(context: Context) {
 
                 val  dataSubtitle = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_SUBTITLE))
 
+                val  dataTag = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_TAGS))
+
+                val  dataURI = cursor.getString(cursor.getColumnIndex(DbContentTable.COLUMN_IMAGE_URI))
+
                 val dataID = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
 
 
                 val dataRC = DataRcView()
                 dataRC.title = dataTitle
                 dataRC.subtitle = dataSubtitle
+                dataRC.tag = dataTag
+                dataRC.uri = dataURI
                 dataRC.idItem = dataID
+
 
 
                 dataList.add(dataRC)

@@ -1,23 +1,16 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.classes
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.DialogInterface
-import android.content.pm.PackageManager
-import android.hardware.biometrics.BiometricPrompt
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CancellationSignal
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.todolist_v20.R
+import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.ActivityMainBinding
 import com.example.todolist_v20.fragments.*
-import kotlin.random.Random
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingMain: ActivityMainBinding // ViewBinding //
@@ -69,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

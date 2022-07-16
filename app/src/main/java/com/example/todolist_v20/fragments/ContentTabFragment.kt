@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import com.example.todolist_v20.ViewModelMy
+import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.adapters.ViewPagerAdapter
 import com.example.todolist_v20.databinding.FragmentContentTabBinding
 import com.google.android.material.tabs.TabLayoutMediator

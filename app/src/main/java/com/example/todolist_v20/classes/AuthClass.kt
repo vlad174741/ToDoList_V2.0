@@ -1,4 +1,4 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.classes
 
 import android.content.*
 import android.content.pm.PackageManager
@@ -10,6 +10,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.todolist_v20.objects.SharedPreference
+import com.example.todolist_v20.objects.ToastText
+import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.ActivityAuthBinding
 

@@ -12,9 +12,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist_v20.EditActivity
+import com.example.todolist_v20.classes.EditActivity
 import com.example.todolist_v20.R
-import com.example.todolist_v20.Variable
+import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.dataBase.dbContent.MyIntentConstant
 import com.example.todolist_v20.dataClass.DataRcView
 import com.example.todolist_v20.databinding.PatternForRecyclerViewBinding
@@ -167,6 +167,8 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
 
                 putExtra(MyIntentConstant.INTENT_TITLE_KEY,itemList.title)
                 putExtra(MyIntentConstant.INTENT_SUBTITLE_KEY,itemList.subtitle)
+                putExtra(MyIntentConstant.INTENT_TAG_KEY,itemList.tag)
+                putExtra(MyIntentConstant.INTENT_URL_KEY,itemList.uri)
                 putExtra(MyIntentConstant.INTENT_ID_KEY,itemList.idItem)
 
             }

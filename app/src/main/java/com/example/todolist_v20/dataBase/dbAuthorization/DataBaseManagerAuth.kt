@@ -2,13 +2,9 @@ package com.example.todolist_v20.dataBase.dbAuthorization
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.example.todolist_v20.AuthClass
-import com.example.todolist_v20.MainActivity
-import com.example.todolist_v20.Variable
+import com.example.todolist_v20.objects.Variable
 
 class DataBaseManagerAuth(var context: Context) {
 

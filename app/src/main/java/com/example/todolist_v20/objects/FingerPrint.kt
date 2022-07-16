@@ -1,4 +1,4 @@
-package com.example.todolist_v20
+package com.example.todolist_v20.objects
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.hardware.biometrics.BiometricPrompt
 import android.os.CancellationSignal
 import android.widget.Toast
-import androidx.arch.core.util.Function
 
 object FingerPrint {
 
@@ -22,7 +21,8 @@ object FingerPrint {
                 DialogInterface.OnClickListener{ _, _-> })
             .build()
 
-        prompt.authenticate(getCancellationSignal(),mainExecutor.mainExecutor,
+        prompt.authenticate(
+            getCancellationSignal(),mainExecutor.mainExecutor,
             object : BiometricPrompt.AuthenticationCallback() {
 
                 override fun onAuthenticationFailed() {

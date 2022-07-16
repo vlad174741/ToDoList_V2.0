@@ -4,8 +4,9 @@ class DataRcView {
 
     var title = ""
     var subtitle = ""
+    var tag = ""
+    var uri = ""
     var idItem = 0
-    var idDelete = 0
     var select = false
 
 }

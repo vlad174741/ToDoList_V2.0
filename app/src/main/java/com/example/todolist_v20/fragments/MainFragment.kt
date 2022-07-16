@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist_v20.Variable
-import com.example.todolist_v20.ViewModelMy
+import com.example.todolist_v20.objects.Variable
+import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.adapters.RecyclerViewAdapter
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataBase.dbContent.VariableDBcontent
@@ -67,19 +67,19 @@ class MainFragment : Fragment() {
         bindingMainFragment.apply {
 
             radioButtonEdritFragmentTagHome.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagHome,Variable.homeTag)
+                tagCheck(radioButtonEdritFragmentTagHome, Variable.homeTag)
             }
             radioButtonEdritFragmentTagShop.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagShop,Variable.shopTag)
+                tagCheck(radioButtonEdritFragmentTagShop, Variable.shopTag)
             }
             radioButtonEdritFragmentTagBank.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagBank,Variable.bankTag)
+                tagCheck(radioButtonEdritFragmentTagBank, Variable.bankTag)
             }
             radioButtonEdritFragmentTagWork.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWork,Variable.workTag)
+                tagCheck(radioButtonEdritFragmentTagWork, Variable.workTag)
             }
             radioButtonEdritFragmentTagWeekend.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWeekend,Variable.weekendTag)
+                tagCheck(radioButtonEdritFragmentTagWeekend, Variable.weekendTag)
             }
             radioButtonEdritFragmentTagSport.setOnClickListener {
                 tagCheck(radioButtonEdritFragmentTagSport, Variable.sportTag)
