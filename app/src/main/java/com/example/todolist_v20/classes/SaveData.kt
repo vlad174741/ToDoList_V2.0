@@ -1,4 +1,4 @@
-package com.example.todolist_v20.objects
+package com.example.todolist_v20.classes
 
 import android.content.SharedPreferences
 

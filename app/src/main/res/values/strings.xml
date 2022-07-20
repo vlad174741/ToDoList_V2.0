@@ -46,9 +46,10 @@
         <string name="usePinCode">Использовать ПИН код</string>
         <string name="delete_mani">Удалить несколько</string>
         <string name="do_you_whant_delete">Вы действительно хотите \n удалить заметку?</string>
+    <string name="clear">Очистить</string>
 
 
-        <string-array name="title"
+    <string-array name="title"
 
             />
     </resources>

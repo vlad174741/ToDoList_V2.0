@@ -1,10 +1,14 @@
 package com.example.todolist_v20.fragments
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,21 +21,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.todolist_v20.objects.PhotoAndImage
-import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataClass.Data
 import com.example.todolist_v20.databinding.FragmentEditBinding
-import java.io.File
+import com.example.todolist_v20.objects.PhotoAndImage
+import com.example.todolist_v20.objects.Tags
+import com.example.todolist_v20.objects.Variable
 
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingEditFragment: FragmentEditBinding
-private lateinit var filePhoto: File
-private lateinit var outputFileUri: Uri
 private lateinit var contextEditFragment: Context
-private const val FILE_NAME = "photo.jpg"
+
+
 
 
 
@@ -41,13 +44,19 @@ class EditFragment : Fragment() {
 
     private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if (it.resultCode == Activity.RESULT_OK && it.data == null ) {
-            bindingEditFragment.imageViewFragmentEdit.setImageURI(outputFileUri)
-            Variable.imgURI = outputFileUri.toString()
+            bindingEditFragment.imageViewFragmentEdit.setImageURI(PhotoAndImage.uri)
+            checkImage()
+            PhotoAndImage.sendMessageGallery(contextEditFragment, PhotoAndImage.filePhoto)
+            Variable.imgURI = PhotoAndImage.uri.toString()
         }else{
             bindingEditFragment.imageViewFragmentEdit.setImageURI(it.data?.data)
+            checkImage()
             checkSavePhoto()
-
-            Variable.imgURI = it.data?.data.toString()
+            if (PhotoAndImage.uri == "".toUri() && it.data?.data == null){
+                Variable.imgURI = "empty"
+            }else {
+                Variable.imgURI = it.data?.data.toString()
+            }
         }
     }
 
@@ -61,7 +70,6 @@ class EditFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("liveFragment", "onCreate")
-        outputFileUri = Uri.parse("")
         contextEditFragment = activity as AppCompatActivity
 
     }
@@ -70,36 +78,78 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?): View {
         bindingEditFragment = FragmentEditBinding.inflate(inflater, container, false)
         Log.d("liveFragment", "onCreateView")
-
         return bindingEditFragment.root
     }
 
 
     private fun takeAndSavePhoto(){
-        filePhoto = PhotoAndImage.getPhotoFile(FILE_NAME, contextEditFragment)
-        outputFileUri = Uri.fromFile(filePhoto)
-        PhotoAndImage.takeFullPhoto(outputFileUri,getResult)
+        PhotoAndImage.takeFullPhoto(getResult, PhotoAndImage.FILE_NAME, contextEditFragment)
     }
 
     private fun checkSavePhoto(){
-        if (outputFileUri != "".toUri()){ PhotoAndImage.deletePhoto(contextEditFragment,
-            outputFileUri)}
+        if (PhotoAndImage.uri != "".toUri()){
+            PhotoAndImage.deletePhoto(contextEditFragment, PhotoAndImage.uri)
+            PhotoAndImage.sendMessageGallery(contextEditFragment, PhotoAndImage.filePhoto)
+            PhotoAndImage.uri = Uri.parse("")
+
+        }
         if (bindingEditFragment.imageViewFragmentEdit.drawable == null) {
             bindingEditFragment.cardViewImageFragmentEdit.visibility = View.GONE
         }
     }
 
-    private fun tagCheck(button: RadioButton, tag: String){
-        if (button.isChecked) {
-            Variable.dbTag = tag+ Variable.username
-            bindingEditFragment.textViewTagCardEditFragment.text = button.text
+
+    private fun checkImage() {
+        bindingEditFragment.apply {
+            if (imageViewFragmentEdit.drawable != null) {
+                cardViewImageFragmentEdit.visibility = View.VISIBLE
+            }else{
+                cardViewImageFragmentEdit.visibility = View.GONE
+            }
         }
     }
 
+    private fun checkTag(button: RadioButton, tag: String){
+        Tags.tagSelectEdit(button, tag, bindingEditFragment.textViewTagCardEditFragment)
+    }
 
+    private fun checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(contextEditFragment)) {
+                requestPermissions(
+                    arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), 2909
+                )
+            } else {
+                Log.d("idDir", "12")
 
+            }
+        } else {
+            Log.d("idDir", "11")
 
+        }
+    }
 
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            2909 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    takeAndSavePhoto()
+                } else {
+                    Log.e("idDir", "Denied")
+                }
+                return
+            }
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,116 +157,108 @@ class EditFragment : Fragment() {
         val dbManager = DataBaseManager(contextEditFragment)
         dbManager.openDataBase()
         val hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
         Log.d("liveFragment", "onViewCreated")
-
-
-        bindingEditFragment.textViewTagCardEditFragment.setOnClickListener {
-
-            bindingEditFragment.radioGroupTegEditFragment.clearCheck()
-            bindingEditFragment.textViewTagCardEditFragment.text = "Нет фильтра"
-            Variable.dbTag = "empty"
-
-            if (bindingEditFragment.scrollTagWindowEditFragment.visibility == View.GONE) {
-                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.VISIBLE
-            }else{
-                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.GONE
-            }
-
-
-        }
-
-
-        bindingEditFragment.floatingActionButtonAddImageFragmentEdit.setOnClickListener {
-            if (bindingEditFragment.cardViewImageFragmentEdit.visibility == View.GONE) {
-                takeAndSavePhoto()
-                bindingEditFragment.cardViewImageFragmentEdit.visibility = View.VISIBLE
-            }else{
-                bindingEditFragment.cardViewImageFragmentEdit.visibility = View.GONE
-                bindingEditFragment.imageViewFragmentEdit.setImageDrawable(null)
-                outputFileUri = Uri.parse("")
-            }
-        }
-
-        bindingEditFragment.floatingActionButtonAddImageFragmentEdit.setOnLongClickListener {
-            if (bindingEditFragment.cardViewImageFragmentEdit.visibility == View.GONE) {
-
-                PhotoAndImage.chooseImageGallery(getResult)
-                bindingEditFragment.cardViewImageFragmentEdit.visibility = View.VISIBLE
-            }else{
-                bindingEditFragment.cardViewImageFragmentEdit.visibility = View.GONE
-
-            }
-
-            true
-        }
 
 
         bindingEditFragment.apply {
 
+            textViewTagCardEditFragment.setOnClickListener {
+
+                radioGroupTegEditFragment.clearCheck()
+                textViewTagCardEditFragment.text = "Нет фильтра"
+                Tags.dbTag = "empty"
+
+                if (scrollTagWindowEditFragment.visibility == View.GONE) {
+                    scrollTagWindowEditFragment.visibility = View.VISIBLE
+                }else{
+                    scrollTagWindowEditFragment.visibility = View.GONE
+                }
+            }
+
+
+            floatingActionButtonAddImageFragmentEdit.setOnClickListener {
+                if (cardViewImageFragmentEdit.visibility == View.GONE) {
+                    checkPermission()
+                }else{
+                    cardViewImageFragmentEdit.visibility = View.GONE
+                    imageViewFragmentEdit.setImageDrawable(null)
+                    checkSavePhoto()
+                    PhotoAndImage.uri = Uri.parse("")
+                    Variable.imgURI = "empty"
+                }
+            }
+
+
+
+
+            floatingActionButtonAddImageFragmentEdit.setOnLongClickListener {
+                if (cardViewImageFragmentEdit.visibility == View.GONE) {
+                    PhotoAndImage.chooseImageGallery(getResult)
+                }else{
+                    cardViewImageFragmentEdit.visibility = View.GONE
+                    imageViewFragmentEdit.setImageDrawable(null)
+                    Variable.imgURI = "empty"
+                }
+                true
+            }
+
             radioButtonEdritFragmentTagHome.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagHome, Variable.homeTag)
+                checkTag(radioButtonEdritFragmentTagHome, Tags.homeTag)
             }
             radioButtonEdritFragmentTagShop.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagShop, Variable.shopTag)
+                checkTag(radioButtonEdritFragmentTagShop, Tags.shopTag)
             }
             radioButtonEdritFragmentTagBank.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagBank, Variable.bankTag)
+                checkTag(radioButtonEdritFragmentTagBank, Tags.bankTag)
             }
             radioButtonEdritFragmentTagWork.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWork, Variable.workTag)
+                checkTag(radioButtonEdritFragmentTagWork, Tags.workTag)
             }
             radioButtonEdritFragmentTagWeekend.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWeekend, Variable.weekendTag)
+                checkTag(radioButtonEdritFragmentTagWeekend, Tags.weekendTag)
             }
             radioButtonEdritFragmentTagSport.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagSport, Variable.sportTag)
+                checkTag(radioButtonEdritFragmentTagSport, Tags.sportTag)
             }
-        }
 
-        bindingEditFragment.editTextEditFragmentSubtitle.setOnClickListener {
+        //Нажатие на editText для скрытия клавиатуры
+        editTextEditFragmentSubtitle.setOnClickListener {
             hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        bindingEditFragment.buttonSaveEditFragment.setOnClickListener{
+        //Кнопка для сохранения заметки
+        buttonSaveEditFragment.setOnClickListener{
 
-            val title = bindingEditFragment.editTextEditFragmentTitle.text
-            val subtitle = bindingEditFragment.editTextEditFragmentSubtitle.text
+            val title = editTextEditFragmentTitle.text
+            val subtitle = editTextEditFragmentSubtitle.text
 
             if (title.isEmpty()){
                 Toast.makeText(contextEditFragment, "Введите заголовок", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(contextEditFragment, "Сохраняем", Toast.LENGTH_SHORT).show()
                 hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
-                Variable.tag = title.toString()
 
-                dbManager.insertToDataBase(title.toString(),subtitle.toString(),
-                    Variable.dbTag, Variable.imgURI)
+                dbManager.insertToDataBase(
+                    title.toString(),subtitle.toString(), Tags.dbTag, Variable.imgURI
+                )
 
-                outputFileUri = Uri.parse("")
-                bindingEditFragment.cardViewImageFragmentEdit.visibility = View.GONE
-                bindingEditFragment.imageViewFragmentEdit.setImageDrawable(null)
-                Variable.dbTag = "empty"
-                bindingEditFragment.textViewTagCardEditFragment.text = "Нет фильтра"
-                bindingEditFragment.scrollTagWindowEditFragment.visibility = View.GONE
+                PhotoAndImage.uri = Uri.parse("")
+                Variable.imgURI = "empty"
+                Tags.dbTag = "empty"
                 title.clear()
                 subtitle.clear()
-                bindingEditFragment.radioGroupTegEditFragment.clearCheck()
 
-
+                cardViewImageFragmentEdit.visibility = View.GONE
+                imageViewFragmentEdit.setImageDrawable(null)
+                textViewTagCardEditFragment.text = "Нет фильтра"
+                scrollTagWindowEditFragment.visibility = View.GONE
+                radioGroupTegEditFragment.clearCheck()
 
             }
-
-
-
-
-
-
-
-
             model.plant.value = Data("Info22", "UseCase22")
         }
-
-
+        }
 
     }
 
@@ -256,8 +298,6 @@ class EditFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("liveFragment", "onDestroy")
-        checkSavePhoto()
-
     }
 
 

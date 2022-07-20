@@ -24,13 +24,15 @@ import com.example.todolist_v20.fragments.dbManager
 private val handler = Handler(Looper.getMainLooper())
 
 
-class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC: Context):RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderAdapter>() {
+class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC: Context)
+    :RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderAdapter>() {
 
     private var listArray = listMain
+    private var isEnable = false
+
 
 
     val itemSelectList = mutableListOf<Int>()
-    private var isEnable = false
 
 
     class ViewHolderAdapter(item: View):RecyclerView.ViewHolder(item) {
@@ -39,12 +41,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
         fun holderRc(list: DataRcView){
             bindingRcView.textViewSubtitleRcView.text = list.subtitle
             bindingRcView.textViewTitleRcView.text = list.title
-
-
         }
-
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderAdapter {
@@ -73,7 +70,6 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
 
 
         holder.itemView.setOnLongClickListener{
-            Variable.tag = ""
 
             if(isEnable){
 
@@ -163,7 +159,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
 
         holder.bindingRcView.imageViewAdd.setOnClickListener {
 
-            var editActivity = Intent(contextRC, EditActivity::class.java).apply {
+            val editActivity = Intent(contextRC, EditActivity::class.java).apply {
 
                 putExtra(MyIntentConstant.INTENT_TITLE_KEY,itemList.title)
                 putExtra(MyIntentConstant.INTENT_SUBTITLE_KEY,itemList.subtitle)

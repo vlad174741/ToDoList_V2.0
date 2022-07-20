@@ -10,8 +10,12 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import java.io.File
-
 object PhotoAndImage {
+
+    const val FILE_NAME = "photo"
+    lateinit var filePhoto: File
+    var uri: Uri = Uri.parse("")
+
 
     fun deletePhoto(context: Context, uri: Uri){
         val fileToDelete = uri.path?.let { File(it) }
@@ -33,26 +37,43 @@ object PhotoAndImage {
     }
 
 
-    fun getPhotoFile(fileName: String, context: Context): File {
-        val directoryStorage = ContextWrapper(context)
-            .getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+     private fun getPhotoFile(fileName: String, context: Context): File {
+
+        val directoryStorage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", directoryStorage)
     }
 
 
 
-     fun takeFullPhoto(uriPhoto: Uri, getResult: ActivityResultLauncher<Intent>) {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val builder = StrictMode.VmPolicy.Builder()
-        StrictMode.setVmPolicy(builder.build())
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto)
-        getResult.launch(intent)
+     fun takeFullPhoto( getResult: ActivityResultLauncher<Intent>, fileName: String, context: Context) {
+         filePhoto = getPhotoFile(fileName, context)
+         uri = Uri.fromFile(filePhoto)
+         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+         val builder = StrictMode.VmPolicy.Builder()
+         StrictMode.setVmPolicy(builder.build())
+         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+
+         getResult.launch(intent)
     }
+
+
 
      fun chooseImageGallery(getResult: ActivityResultLauncher<Intent>) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         getResult.launch(intent)
+    }
+
+
+
+    fun sendMessageGallery(context: Context, file: File){
+        val intentGallery = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
+
+            data = Uri.fromFile(file)
+            Log.d("idDir", "$filePhoto.toString()")
+
+        }
+        context.sendBroadcast(intentGallery)
     }
 }
 

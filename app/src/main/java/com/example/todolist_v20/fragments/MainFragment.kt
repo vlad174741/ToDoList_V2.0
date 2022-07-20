@@ -19,6 +19,7 @@ import com.example.todolist_v20.adapters.RecyclerViewAdapter
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataBase.dbContent.VariableDbContent
 import com.example.todolist_v20.databinding.FragmentMainBinding
+import com.example.todolist_v20.objects.Tags
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingMainFragment: FragmentMainBinding
@@ -67,27 +68,28 @@ class MainFragment : Fragment() {
         bindingMainFragment.apply {
 
             radioButtonEdritFragmentTagHome.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagHome, Variable.homeTag)
+                tagSelection(radioButtonEdritFragmentTagHome, Tags.homeTag)
             }
             radioButtonEdritFragmentTagShop.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagShop, Variable.shopTag)
+                tagSelection(radioButtonEdritFragmentTagShop, Tags.shopTag)
             }
             radioButtonEdritFragmentTagBank.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagBank, Variable.bankTag)
+                tagSelection(radioButtonEdritFragmentTagBank, Tags.bankTag)
             }
             radioButtonEdritFragmentTagWork.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWork, Variable.workTag)
+                tagSelection(radioButtonEdritFragmentTagWork, Tags.workTag)
             }
             radioButtonEdritFragmentTagWeekend.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagWeekend, Variable.weekendTag)
+                tagSelection(radioButtonEdritFragmentTagWeekend, Tags.weekendTag)
             }
             radioButtonEdritFragmentTagSport.setOnClickListener {
-                tagCheck(radioButtonEdritFragmentTagSport, Variable.sportTag)
+                tagSelection(radioButtonEdritFragmentTagSport, Tags.sportTag)
             }
         }
 
         fun rcViewReadDB() {
             val dataList = dbManager.readDataBase(Variable.email,VariableDbContent.selectionColumnAccount)
+
             rcAdapter.updateAdapter(dataList)
         }
 
@@ -118,30 +120,16 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun tagCheck(button: RadioButton, tag: String){
-        if (button.isChecked) {
-
-            if (Variable.tag==tag){
-                bindingMainFragment.radioGroupTegEditFragment.clearCheck()
-                Variable.tag = ""
-                val dataList = dbManager.readDataBase(Variable.email, VariableDbContent.selectionColumnAccount)
-                rcAdapter.updateAdapter(dataList)
-
-
-            }else {
-                val result = tag + Variable.username
-                val dataList = dbManager.readDataBase(result, VariableDbContent.selectionColumnTag)
-                rcAdapter.updateAdapter(dataList)
-                Variable.tag = tag
-
-                Log.d("tag", result)
-            }
-        }
+    private fun tagSelection(button: RadioButton, tag: String){
+        Tags.tagSelectMainFragment(button, tag)
     }
+
 
     override fun onResume() {
         super.onResume()
         val dataList = dbManager.readDataBase(Variable.email, VariableDbContent.selectionColumnAccount)
+        val dataListTag = dbManager.readDataBase(Tags.mainFragmentTag, VariableDbContent.selectionColumnTag)
+
 
         if (Variable.check==1) {
             Variable.check = 0
@@ -150,7 +138,12 @@ class MainFragment : Fragment() {
             bindingMainFragment.button.visibility = View.GONE
         }
         Log.d("id", Variable.email)
-        rcAdapter.updateAdapter(dataList)
+
+        if (Tags.mainFragmentTag != "") {
+            rcAdapter.updateAdapter(dataListTag)
+        }else{
+            rcAdapter.updateAdapter(dataList)
+        }
 
 
 

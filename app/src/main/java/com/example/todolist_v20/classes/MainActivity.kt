@@ -1,8 +1,12 @@
 package com.example.todolist_v20.classes
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import com.example.todolist_v20.R
 import com.example.todolist_v20.objects.Variable
@@ -55,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("idItemSelect", "${Variable.id}")
         Log.d("idItemSelect", Variable.email)
         Log.d("idItemSelect", Variable.username)
+
 
 
     }
