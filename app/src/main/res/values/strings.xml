@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">ToDoList_V2.0</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main">Главная</string>
+    <string name="option">Опции</string>
+    <string name="add">Добавить</string>
+    <string name="title">Заголовок</string>
+    <string name="subtitle">Описание</string>
+    <string name="insert">Записать</string>
+    <string name="delete">Удалить</string>
+    <string name="e_mail">E-mail</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="logout">Выйти</string>
+    <string name="noFilter">Нет фильтра</string>
+        <string name="todo">TODO</string>
+        <string name="no_elements">Нет элементов</string>
+        <string name="context">Описание</string>
+        <string name="textview">TextView</string>
+        <string name="home">Дом</string>
+        <string name="shop">Покупки</string>
+        <string name="work">Работа</string>
+        <string name="weekend">Отдых</string>
+        <string name="bank">Банк</string>
+        <string name="other">Другое</string>
+        <string name="choose_theme_text">st</string>
+        <string name="dark">Темная</string>
+        <string name="light">Светлая</string>
+        <string name="auto">Авто</string>
+        <string name="theme_setting">Настройка темы</string>
+        <string name="Settings">Настройки</string>
+        <string name="Yes">Да</string>
+        <string name="No">Нет</string>
+        <string name="Message_about_delete">Уведомление при удаление заметки</string>
+        <string name="sport">Спорт</string>
+        <string name="registration">Зарегестрироваться</string>
+        <string name="sing_in">Войти</string>
+        <string name="Without_reg">Войти без регистрации</string>
+        <string name="InputOldLogin">Введите стары логин</string>
+        <string name="InputOldPass">Введите старый пороль</string>
+        <string name="ChangePass">Сменить пароль</string>
+        <string name="login_PIN">Вход через ПИН код</string>
+        <string name="change_PIN">Изменить ПИН</string>
+        <string name="rememberMe">Запомнить меня</string>
+        <string name="usePinCode">Использовать ПИН код</string>
+        <string name="delete_mani">Удалить несколько</string>
+        <string name="do_you_whant_delete">Вы действительно хотите \n удалить заметку?</string>
+    <string name="clear">Очистить</string>
+    <string name="singInToFingerPrint">Вход по отпечатку</string>
+    <string name="authorizationOption">Настройки авторизации</string>
+    <string name="select_theme">Выбор темы</string>
+
+
+    <string-array name="title"
+
+            />
+    </resources>

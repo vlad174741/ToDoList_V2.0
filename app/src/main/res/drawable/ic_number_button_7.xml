@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+  <path
+      android:pathData="M20,20m-20,0a20,20 0,1 1,40 0a20,20 0,1 1,-40 0"
+      android:fillColor="@color/button_push_color"/>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M20,20m-19.5,0a19.5,19.5 0,1 1,39 0a19.5,19.5 0,1 1,-39 0"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/border_line_color"/>
+  <path
+      android:pathData="M16.299,15.715C16.006,15.715 15.859,15.568 15.859,15.275V14.553C15.859,14.26 16.006,14.113 16.299,14.113H24.443C24.736,14.113 24.883,14.26 24.883,14.553V15.227C24.883,15.435 24.766,15.669 24.531,15.93C23.229,17.408 22.184,19.045 21.396,20.842C20.609,22.632 20.215,24.585 20.215,26.701V27.619C20.215,27.912 20.068,28.059 19.775,28.059H18.887C18.594,28.059 18.447,27.912 18.447,27.619V27.043C18.447,24.693 18.893,22.626 19.785,20.842C20.677,19.051 21.787,17.342 23.115,15.715V15.695C22.92,15.708 22.725,15.715 22.529,15.715H16.299Z"
+      android:fillColor="@color/border_line_color"/>
+</vector>

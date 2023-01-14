@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".classes.MainActivity">
+
+
+    <ScrollView
+        android:id="@+id/scrollView_edit_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:isScrollContainer="false"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar_edit_fragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_image_edit_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tool_bar_edit_fragment">
+
+                <ImageView
+                    android:id="@+id/imageView_edit_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/todo"
+                    tools:ignore="ImageContrastCheck"
+                    tools:src="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/tag_card_edit_fragment"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlHardcoded">
+
+                    <TextView
+                        android:id="@+id/textView_tag_card_edit_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/noFilter"
+                        android:textSize="12sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </androidx.cardview.widget.CardView>
+
+                <HorizontalScrollView
+                    android:id="@+id/scroll_tag_window_edit_fragment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tag_card_edit_fragment"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:id="@+id/radio_group_teg_edit_fragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:scrollbars="horizontal"
+                            app:singleLine="true"
+                            app:singleSelection="true"
+                            tools:ignore="UselessParent">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:gravity="center"
+                                android:text="@string/home" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_shop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center"
+
+                                android:text="@string/shop" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_bank"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center"
+
+                                android:text="@string/bank" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_work"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center"
+                                android:text="@string/work" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_weekend"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center"
+
+                                android:text="@string/weekend" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_sport"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+
+                                android:layout_marginEnd="8dp"
+                                android:gravity="center"
+                                android:text="@string/sport" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_edit_fragment_tag_clear"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/clear" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/editText_edit_fragment_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="@string/title"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editText_edit_fragment_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/subtitle"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:textColorHint="#757575"
+                android:textColorLink="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tool_bar_edit_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton_action_image_edit_fragment"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:clickable="true"
+                android:contentDescription="@string/todo"
+                android:focusable="true"
+                android:foreground="@drawable/ic_image_24"
+                android:foregroundGravity="center"
+                app:borderWidth="2dp"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,UnusedAttribute,DuplicateSpeakableTextCheck,ImageContrastCheck" />
+
+            <Button
+                android:id="@+id/button_save_edit_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center|right"
+                android:layout_marginEnd="8dp"
+                android:text="@string/insert"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlHardcoded,TouchTargetSizeCheck" />
+
+            <LinearLayout
+                android:id="@+id/action_image_button_edit_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_save_edit_fragment"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/floatingActionButton_action_image_edit_fragment"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton_add_image_edit_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:contentDescription="@string/todo"
+                    android:focusable="true"
+                    android:foreground="@drawable/ic_image_24"
+                    android:foregroundGravity="center"
+                    android:visibility="visible"
+                    app:borderWidth="2dp"
+                    app:fabSize="normal"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,UnusedAttribute,DuplicateSpeakableTextCheck,ImageContrastCheck" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton_add_photo_edit_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/todo"
+                    android:focusable="true"
+                    android:foreground="@drawable/ic_photo_camera_24"
+                    android:foregroundGravity="center"
+                    android:visibility="visible"
+                    app:borderWidth="2dp"
+                    app:fabSize="normal"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,UnusedAttribute,DuplicateSpeakableTextCheck,ImageContrastCheck" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton_delete_photo_edit_fragment"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:contentDescription="@string/todo"
+                    android:focusable="true"
+                    android:foreground="@drawable/ic_delete"
+                    android:foregroundGravity="center"
+                    android:visibility="visible"
+                    app:borderWidth="2dp"
+                    app:fabSize="normal"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,UnusedAttribute,DuplicateSpeakableTextCheck,ImageContrastCheck" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

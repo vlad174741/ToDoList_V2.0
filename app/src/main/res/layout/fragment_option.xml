@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.MainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_option_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_option_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/select_theme"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/borderUnderLine_option_auth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine_option_auth_FP"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView_option_theme2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Что то нужно добавить"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/borderUnderLine_option_auth2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine_option_auth" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/borderUnderLine_option_auth2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/border_line_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine_option_auth" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/borderUnderLine_option_auth"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/border_line_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine_option_auth_FP">
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/borderUnderLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/border_line_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_option" />
+
+        <TextView
+            android:id="@+id/textView_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/Settings"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_option_auth_singIN_finger_print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/singInToFingerPrint"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/borderUnderLine_option_auth_FP"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <RadioGroup
+            android:id="@+id/rg_option_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/borderUnderLine_option_auth"
+            app:layout_constraintEnd_toEndOf="@+id/borderUnderLine_option_auth"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView_option_theme"
+            app:layout_constraintTop_toBottomOf="@+id/textView_option_theme">
+
+            <RadioButton
+                android:id="@+id/radioButton_system_option_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/tag_button"
+                android:button="@android:color/transparent"
+                android:text="@string/auto"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton_dark_option_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/tag_button"
+                android:button="@android:color/transparent"
+                android:text="@string/dark"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton_light_option_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tag_button"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:text="@string/light"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/borderUnderLine_option_auth_FP"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/border_line_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borderUnderLine">
+
+        </androidx.cardview.widget.CardView>
+
+        <RadioGroup
+            android:id="@+id/rg_option_auth_PS"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/borderUnderLine_option_auth_FP"
+            app:layout_constraintEnd_toEndOf="@+id/borderUnderLine_option_auth_FP"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView_option_auth_singIN_finger_print"
+            app:layout_constraintTop_toBottomOf="@+id/textView_option_auth_singIN_finger_print">
+
+            <RadioButton
+                android:id="@+id/radioButton_yes_option_auth_PS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/tag_button"
+                android:button="@android:color/transparent"
+                android:text="@string/Yes"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/radioButton_no_option_auth_PS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tag_button"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:text="@string/No"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
