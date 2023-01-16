@@ -50,6 +50,8 @@
     <string name="singInToFingerPrint">Вход по отпечатку</string>
     <string name="authorizationOption">Настройки авторизации</string>
     <string name="select_theme">Выбор темы</string>
+    <string name="protectedSingIn">Защищенная авторизация</string>
+    <string name="createPinCodeText">Придумайте 4-х значный код</string>
 
 
     <string-array name="title"

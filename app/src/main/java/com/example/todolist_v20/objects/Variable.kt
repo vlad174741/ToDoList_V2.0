@@ -12,6 +12,7 @@ object Variable {
     var prevPositionRcView = -1
     var passwordCheck = false
     var password = ""
+    var fingerPrintYes = false
 
     //Option
     var prefFingerPrint = 0

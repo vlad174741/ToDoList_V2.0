@@ -6,13 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import com.example.todolist_v20.R
-import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.databinding.ActivityMainBinding
-import com.example.todolist_v20.databinding.AuthPinFormBinding
 import com.example.todolist_v20.fragments.*
-import com.example.todolist_v20.objects.SharedPreference
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingMain: ActivityMainBinding // ViewBinding //
@@ -31,14 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(bindingMain.root)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-
-
-
-
-
-
-
-
 
 
         if (savedInstanceState == null) {

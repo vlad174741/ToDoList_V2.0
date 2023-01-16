@@ -1,16 +1,8 @@
 package com.example.todolist_v20.dataBase.dbAuthorization
 
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import com.example.todolist_v20.classes.AuthClass
-import com.example.todolist_v20.classes.ChangeTheme
-import com.example.todolist_v20.classes.main
-import com.example.todolist_v20.objects.FingerPrint
 import com.example.todolist_v20.objects.SharedPreference
 import com.example.todolist_v20.objects.Variable
 
@@ -28,44 +20,31 @@ class DataBaseManagerAuth(var context: Context) {
     }
 
     fun insertOptionToDB(){
+
         val selection = "${dbAuthTable.COLUMN_USERNAME} = '${SharedPreference.authUsernamePref}'"
 
         val values = ContentValues().apply {
-
             put(dbAuthTable.COLUMN_PREF_THEME, Variable.prefTheme)
             put(dbAuthTable.COLUMN_PREF_FINGER_SCREEN, Variable.prefFingerPrint)
-            if(Variable.password == "") {
-                put(dbAuthTable.COLUMN_PASSWORD, Variable.password)
-            }
-
+            put(dbAuthTable.COLUMN_PASSWORD, Variable.password)
         }
         db?. update(dbAuthTable.TABLE_NAME,values, selection,null)
-
-
     }
 
     private fun createAccount(username: String) {
 
         val values = ContentValues().apply {
-
-
             put(dbAuthTable.COLUMN_USERNAME, username)
             put(dbAuthTable.COLUMN_PASSWORD, "")
             put(dbAuthTable.COLUMN_PREF_FINGER_SCREEN, Variable.prefFingerPrint)
             put(dbAuthTable.COLUMN_PREF_THEME, Variable.prefTheme)
-
-
-
         }
-
-
-            db?.insert(dbAuthTable.TABLE_NAME, null, values)
-
+        db?.insert(dbAuthTable.TABLE_NAME, null, values)
     }
 
-    fun checkAccount(context: Context) {
+    fun checkAccount() {
 
-           val selection = "${dbAuthTable.COLUMN_USERNAME} = ?"
+        val selection = "${dbAuthTable.COLUMN_USERNAME} = ?"
 
         val cursor = db?.query(
 
@@ -78,27 +57,19 @@ class DataBaseManagerAuth(var context: Context) {
 
         return cursor. use {
 
-
             if (cursor != null && cursor.count!=0) {
-                Toast.makeText(context, "Такой логин уже зарегестрирован", Toast.LENGTH_SHORT).show()
-                findAccountId(SharedPreference.authUsernamePref,context)
-
-
-
-
+                findAccountId(SharedPreference.authUsernamePref)
             }else{
-                Toast.makeText(context, "Пользователь создан: ${SharedPreference.authUsernamePref}", Toast.LENGTH_SHORT).show()
                 createAccount(SharedPreference.authUsernamePref)
-
-
             }
+
         }
 
     }
 
 
 
-    fun findAccountId(username: String, context: Context) {
+    private fun findAccountId(username: String) {
 
         val selection = "${dbAuthTable.COLUMN_USERNAME} = ?"
 
@@ -112,7 +83,6 @@ class DataBaseManagerAuth(var context: Context) {
 
         return cursor. use {
 
-
             if (cursor != null && cursor.count!=0) {
 
                 cursor.moveToFirst()
@@ -124,35 +94,14 @@ class DataBaseManagerAuth(var context: Context) {
                 val password =
                     cursor.getString(cursor.getColumnIndexOrThrow(dbAuthTable.COLUMN_PASSWORD))
 
-
-
                 Variable.username = cursor.getString(cursor.getColumnIndex(dbAuthTable.COLUMN_USERNAME))
                 Variable.prefFingerPrint = prefFingerPrint.toInt()
                 Variable.prefTheme = prefTheme.toInt()
                 Variable.password = password
 
-
-
-                if (prefFingerPrint == "1") {
-                    Toast.makeText(context, "Отпечаток нужен", Toast.LENGTH_SHORT).show()
-
-                    if(password == ""){
-                        Variable.passwordCheck = true
-
-                    }
-
-
-
-
-                } else {
-
-                    Toast.makeText(context, "Отпечаток не нужен", Toast.LENGTH_SHORT).show()
-                    Variable.auth=true
-
-
-                }
-
-                }
+                if (prefFingerPrint == "1") { if(password == ""){ Variable.passwordCheck = true } }
+                else { Variable.auth=true }
+            }
         }
 
     }

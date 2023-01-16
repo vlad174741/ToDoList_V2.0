@@ -1,7 +1,6 @@
 package com.example.todolist_v20.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,13 +9,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import com.example.todolist_v20.classes.AuthClass
 import com.example.todolist_v20.classes.ChangeTheme
-import com.example.todolist_v20.classes.MainActivity
 import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.AuthPinFormBinding
-import com.example.todolist_v20.objects.FingerPrint
 import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.databinding.FragmentOptionBinding
 
