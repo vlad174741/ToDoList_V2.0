@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable-night/icon.xml" value="0.2415" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable-notnight/icon.xml" value="0.2415" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable-v24/ic_baseline_fingerprint.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2415" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable-v24/tag_button.xml" value="0.2375" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/check_uncheck.xml" value="0.2265" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/d.xml" value="0.124" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/ic_baseline_airport_shuttle_24.xml" value="0.2415" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/ic_baseline_auto_stories_24.xml" value="0.124" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/ic_baseline_fingerprint.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/ToDoList_V20/app/src/main/res/drawable/ic_launcher_background.xml" value="0.124" />
