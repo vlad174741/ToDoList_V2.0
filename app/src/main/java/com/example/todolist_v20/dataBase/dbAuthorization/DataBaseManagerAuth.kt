@@ -29,6 +29,7 @@ class DataBaseManagerAuth(var context: Context) {
             put(dbAuthTable.COLUMN_PASSWORD, Variable.password)
         }
         db?. update(dbAuthTable.TABLE_NAME,values, selection,null)
+
     }
 
     private fun createAccount(username: String) {
@@ -40,6 +41,7 @@ class DataBaseManagerAuth(var context: Context) {
             put(dbAuthTable.COLUMN_PREF_THEME, Variable.prefTheme)
         }
         db?.insert(dbAuthTable.TABLE_NAME, null, values)
+        Variable.auth=true
     }
 
     fun checkAccount() {
@@ -75,7 +77,7 @@ class DataBaseManagerAuth(var context: Context) {
 
 
         val cursor = db?.query(dbAuthTable.TABLE_NAME,
-            arrayOf(dbAuthTable.COLUMN_ID, dbAuthTable.COLUMN_PASSWORD, dbAuthTable.COLUMN_USERNAME,
+            arrayOf(dbAuthTable.COLUMN_ID, dbAuthTable.COLUMN_USERNAME, dbAuthTable.COLUMN_PASSWORD,
                 dbAuthTable.COLUMN_PREF_FINGER_SCREEN, dbAuthTable.COLUMN_PREF_THEME),
             selection, arrayOf(username),
             null, null, null
@@ -101,6 +103,7 @@ class DataBaseManagerAuth(var context: Context) {
 
                 if (prefFingerPrint == "1") { if(password == ""){ Variable.passwordCheck = true } }
                 else { Variable.auth=true }
+
             }
         }
 

@@ -30,13 +30,8 @@ class AuthClass: AppCompatActivity() {
         main = Intent(this, MainActivity::class.java)
 
         checkUser()
-
-
         bindingAuth = AuthPinFormBinding.inflate(layoutInflater)
         setContentView(bindingAuth.root)
-
-        dbManagerAuth.openDataBase()
-        SharedPreference.preferenceUsername(this)
         checkBiometric()
 
         if(Variable.passwordCheck){
@@ -158,7 +153,6 @@ class AuthClass: AppCompatActivity() {
         if (Variable.auth){
             startActivity(main)
         }
-        dbManagerAuth.closeDataBase()
     }
 
 
@@ -205,6 +199,8 @@ class AuthClass: AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        dbManagerAuth.closeDataBase()
+
         if (Variable.auth) {
             finish()
         }

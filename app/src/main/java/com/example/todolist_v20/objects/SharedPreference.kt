@@ -14,8 +14,8 @@ object SharedPreference {
 
         val sharedPreferences =  ContextWrapper(context)
 
-        prefsAuthUsername = sharedPreferences.getSharedPreferences("usernamePref", Context.MODE_PRIVATE)
-        authUsernamePref = prefsAuthUsername?.getString("usernamePref", "user")!!
+        prefsAuthUsername = sharedPreferences.getSharedPreferences("username", Context.MODE_PRIVATE)
+        authUsernamePref = prefsAuthUsername?.getString("username", "user")!!
     }
 
     var authThemePref = ""

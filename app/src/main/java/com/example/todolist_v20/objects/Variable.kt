@@ -6,7 +6,7 @@ import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 object Variable {
     var check = 0
     var auth = false
-    var username = "vlad"
+    var username = "user"
     var imgURI = ""
     var id = 0
     var prevPositionRcView = -1

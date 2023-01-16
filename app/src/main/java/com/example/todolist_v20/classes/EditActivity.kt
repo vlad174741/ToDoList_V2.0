@@ -334,6 +334,10 @@ class EditActivity: BasicActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Variable.imgURI = "empty"
+        uriImageDb = Uri.parse("")
+        PhotoAndImage.uri = Uri.parse("")
+        Tags.dbTag = "empty"
         dataBaseManager.closeDataBase()
 
     }

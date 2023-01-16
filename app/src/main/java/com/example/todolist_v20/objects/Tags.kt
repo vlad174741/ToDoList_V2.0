@@ -35,7 +35,7 @@ object Tags {
                 textView.text = "Нет фильтра"
 
             }else {
-                dbTag = tag + Variable.username
+                dbTag = tag
                 textView.text = button.text
             }
         }
