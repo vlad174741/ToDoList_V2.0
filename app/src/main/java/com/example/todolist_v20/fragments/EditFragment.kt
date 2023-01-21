@@ -283,6 +283,8 @@ class EditFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("liveFragment", "onResume")
+        MainFragment().onResume()
+
 
 
     }
@@ -290,6 +292,7 @@ class EditFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         Log.d("liveFragment", "onPause")
+
 
     }
 

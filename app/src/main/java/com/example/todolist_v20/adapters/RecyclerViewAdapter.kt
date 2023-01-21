@@ -30,6 +30,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
     val itemSelectList = mutableListOf<Int>()
 
 
+
     class ViewHolderAdapter(item: View):RecyclerView.ViewHolder(item) {
 
         var bindingRcView = PatternForRecyclerViewBinding.bind(item)
@@ -60,12 +61,21 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
 
 
 
+
+
         if (!isEnable){
-            holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_delete)
+            if(itemSelectList.isEmpty()) {
+                holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_delete)
+            }
 
         }else {
-            holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_unchecked)
-            holder.bindingRcView.cardRedactItemRc.visibility = View.GONE
+            if(itemSelectList.isEmpty()) {
+
+
+                holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_unchecked)
+                holder.bindingRcView.cardRedactItemRc.visibility = View.GONE
+
+            }
         }
 
 
@@ -214,6 +224,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
         listArray.removeAll{item -> item.select}
         isEnable = false
         itemSelectList.clear()
+        MainFragment().onResume()
         notifyDataSetChanged()
     }
 

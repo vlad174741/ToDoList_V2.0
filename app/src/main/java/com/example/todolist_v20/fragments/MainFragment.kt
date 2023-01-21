@@ -14,11 +14,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.adapters.RecyclerViewAdapter
-import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataBase.dbContent.VariableDbContent
 import com.example.todolist_v20.databinding.FragmentMainBinding
-import com.example.todolist_v20.databinding.PatternForRecyclerViewBinding
 import com.example.todolist_v20.objects.Tags
 
 @SuppressLint("StaticFieldLeak")
@@ -148,6 +146,7 @@ class MainFragment : Fragment() {
         }else{
             rcAdapter.updateAdapter(dataList)
         }
+        rcAdapter.clearItemSelect()
 
 
 
@@ -162,6 +161,8 @@ class MainFragment : Fragment() {
 
 
     }
+
+
 
 
 

@@ -55,7 +55,7 @@ object Tags {
 
             }else {
                 tagButtonActive = button
-                val result = tag + Variable.username
+                val result = tag
                 val dataList = dbManager.readDataBase(result, VariableDbContent.selectionColumnTag)
                 rcAdapter.updateAdapter(dataList)
                 tagUsingMainFragment = tag
@@ -71,22 +71,22 @@ object Tags {
         when (tag){
             "empty"->{
                 bindingEdit.textViewTagCardEditActivity.text = "Нет фильтра"}
-            "home${Variable.username}"->{ bindingEdit.apply {
+            "home"->{ bindingEdit.apply {
                 radioButtonEditActivityTagHome.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagHome.text}}
-            "shop${Variable.username}"->{ bindingEdit.apply {
+            "shop"->{ bindingEdit.apply {
                 radioButtonEditActivityTagShop.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagShop.text}}
-            "bank${Variable.username}"->{ bindingEdit.apply {
+            "bank"->{ bindingEdit.apply {
                 radioButtonEditActivityTagBank.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagBank.text}}
-            "work${Variable.username}"->{ bindingEdit.apply {
+            "work"->{ bindingEdit.apply {
                 radioButtonEditActivityTagWork.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagWork.text}}
-            "weekend${Variable.username}"->{ bindingEdit.apply {
+            "weekend"->{ bindingEdit.apply {
                 radioButtonEditActivityTagWeekend.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagWeekend.text}}
-            "sport${Variable.username}"->{ bindingEdit.apply {
+            "sport"->{ bindingEdit.apply {
                 radioButtonEditActivityTagSport.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagSport.text}}
         }
