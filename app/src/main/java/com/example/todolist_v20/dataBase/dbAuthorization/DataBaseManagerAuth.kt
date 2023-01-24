@@ -102,7 +102,7 @@ class DataBaseManagerAuth(var context: Context) {
                 Variable.password = password
 
                 if (prefFingerPrint == "1") { if(password == ""){ Variable.passwordCheck = true } }
-                else { Variable.auth=true }
+                else { Variable.auth=true; Variable.passwordCheck = true }
 
             }
         }

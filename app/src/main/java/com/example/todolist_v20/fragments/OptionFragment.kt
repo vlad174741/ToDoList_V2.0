@@ -15,10 +15,10 @@ import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.AuthPinFormBinding
 import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.databinding.FragmentOptionBinding
+import com.example.todolist_v20.objects.Variable.dbManagerAuth
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingOptionFragment: FragmentOptionBinding
-lateinit var dbManagerAuthOptionFragment: DataBaseManagerAuth
 lateinit var bindingPin: AuthPinFormBinding
 
 
@@ -46,7 +46,7 @@ class OptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         model.plant.observe(activity as LifecycleOwner){}
-        dbManagerAuthOptionFragment = DataBaseManagerAuth(activity as AppCompatActivity)
+        dbManagerAuth = DataBaseManagerAuth(activity as AppCompatActivity)
 
 
 
@@ -59,11 +59,11 @@ class OptionFragment : Fragment() {
         bindingOptionFragment.radioButtonNoOptionAuthPS.setOnClickListener{
             Variable.prefFingerPrint = 0
             Variable.password = ""
-            dbManagerAuthOptionFragment.insertOptionToDB()
+            dbManagerAuth.insertOptionToDB()
         }
         bindingOptionFragment.radioButtonYesOptionAuthPS.setOnClickListener{
             Variable.prefFingerPrint = 1
-            dbManagerAuthOptionFragment.insertOptionToDB()
+            dbManagerAuth.insertOptionToDB()
 
         }
 
@@ -77,19 +77,19 @@ class OptionFragment : Fragment() {
 
         bindingOptionFragment.radioButtonSystemOptionTheme.setOnClickListener{
             Variable.prefTheme = 0
-            dbManagerAuthOptionFragment.insertOptionToDB()
+            dbManagerAuth.insertOptionToDB()
             ChangeTheme().themeChange(0, (activity as AppCompatActivity).delegate)
 
         }
         bindingOptionFragment.radioButtonDarkOptionTheme.setOnClickListener{
             Variable.prefTheme = 1
-            dbManagerAuthOptionFragment.insertOptionToDB()
+            dbManagerAuth.insertOptionToDB()
             ChangeTheme().themeChange(1, (activity as AppCompatActivity).delegate)
 
         }
         bindingOptionFragment.radioButtonLightOptionTheme.setOnClickListener{
             Variable.prefTheme = 2
-            dbManagerAuthOptionFragment.insertOptionToDB()
+            dbManagerAuth.insertOptionToDB()
             ChangeTheme().themeChange(2, (activity as AppCompatActivity).delegate)
         }
 
@@ -100,7 +100,7 @@ class OptionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        dbManagerAuthOptionFragment.openDataBase()
+        dbManagerAuth.openDataBase()
         if(rcAdapter.isEnable){ rcAdapter.clearItemSelect()}
 
 
@@ -109,7 +109,7 @@ class OptionFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        dbManagerAuthOptionFragment.closeDataBase()
+        dbManagerAuth.closeDataBase()
     }
 
     companion object {

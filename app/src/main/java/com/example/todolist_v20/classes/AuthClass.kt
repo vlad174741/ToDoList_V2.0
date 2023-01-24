@@ -1,44 +1,77 @@
 package com.example.todolist_v20.classes
 
-import android.app.KeyguardManager
 import android.content.Intent
+import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
+import android.os.CancellationSignal
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.hardware.fingerprint.FingerprintManagerCompat
+import androidx.core.content.ContextCompat
 import com.example.todolist_v20.R
 import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.AuthPinFormBinding
-import com.example.todolist_v20.objects.FingerPrint
 import com.example.todolist_v20.objects.SharedPreference
 import com.example.todolist_v20.objects.Variable
-
+import com.example.todolist_v20.objects.Variable.dbManagerAuth
+import com.example.todolist_v20.objects.Variable.intentVar
 
 lateinit var bindingAuth:AuthPinFormBinding
-lateinit var main:Intent
 
 class AuthClass: AppCompatActivity() {
-
-    private val dbManagerAuth = DataBaseManagerAuth(this)
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        main = Intent(this, MainActivity::class.java)
+        dbManagerAuth = DataBaseManagerAuth(this)
+        intentVar = Intent(this, MainActivity::class.java)
 
         checkUser()
         bindingAuth = AuthPinFormBinding.inflate(layoutInflater)
         setContentView(bindingAuth.root)
-        checkBiometric()
+        if(!Variable.passwordCheck){ checkBiometric()}
+        fingerPrintButton()
+        pinCodeButtons()
 
-        if(Variable.passwordCheck){
-            bindingAuth.textViewCreatePin.visibility = View.VISIBLE
-        }
+        Log.d("liveActivity", "AuthClass.onCreate")
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("liveActivity", "AuthClass.onStart")
 
 
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        Log.d("liveActivity", "AuthClass.onResume")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("liveActivity", "AuthClass.onPause")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        dbManagerAuth.closeDataBase()
+        if (Variable.auth) { finish() }
+        Log.d("liveActivity", "AuthClass.onStop")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("liveActivity", "AuthClass.onDestroy")
+
+    }
+
+    private fun pinCodeButtons(){
         bindingAuth.apply {
             floatingActionButton1.setOnClickListener(@Suppress("UNUSED_PARAMETER") View.OnClickListener
             { textViewPin.append("1"); pinSingIn() })
@@ -78,7 +111,6 @@ class AuthClass: AppCompatActivity() {
                     textViewPin.text = back.substring(0, back.length - 1)
 
                 }else{textViewPin.append("")}
-
             })
 
             floatingActionButtonOk.setOnClickListener(@Suppress("UNUSED_PARAMETER") View.OnClickListener
@@ -89,36 +121,21 @@ class AuthClass: AppCompatActivity() {
                         bindingAuth.textViewCreatePin.visibility = View.GONE
                         Variable.passwordCheck = false
                         dbManagerAuth.insertOptionToDB()
-                        if (Variable.fingerPrintYes) {
-                            bindingAuth.floatingActionButtonOk.foreground =
-                                resources.getDrawable(R.drawable.ic_baseline_fingerprint)
-                        }else{
-                            floatingActionButtonOk.visibility = View.GONE
-                        }
+                        checkBiometric()
+                        fingerPrintButton()
                         textViewPin.text = ""
                     }else{
                         Toast.makeText(this@AuthClass, "Введите не менее 4 цифр", Toast.LENGTH_SHORT).show()
 
                     }
 
-                } else { FingerPrint.fingerPrintDialog(this@AuthClass) }
+                } else { checkBiometric() }
 
             })
 
         }
-    }
-
-
-
-
-
-
-    public override fun onResume() {
-        super.onResume()
 
     }
-
-
 
 
     private fun pinSingIn(){
@@ -126,7 +143,7 @@ class AuthClass: AppCompatActivity() {
             if (bindingAuth.textViewPin.length() == 4) {
 
                 if (bindingAuth.textViewPin.text.toString() == Variable.password) {
-                    startActivity(main)
+                    startActivity(intentVar)
                     finish()
                 } else {
                     bindingAuth.textViewPin.text = ""
@@ -134,7 +151,6 @@ class AuthClass: AppCompatActivity() {
             }
         }
     }
-
 
 
     private fun checkUser(){
@@ -148,66 +164,85 @@ class AuthClass: AppCompatActivity() {
             2-> ChangeTheme().themeChange(2, delegate)
         }
 
-
-
         if (Variable.auth){
-            startActivity(main)
+            startActivity(intentVar)
         }
     }
 
 
-    private fun checkBiometric(){
+
+    private fun fingerPrintButton(){
 
 
-        val keyguardManager = this.getSystemService(KEYGUARD_SERVICE) as KeyguardManager
-        if (keyguardManager.isKeyguardSecure) {
+        if (!Variable.fingerPrintYes) {
 
-            val fingerprintManager = FingerprintManagerCompat.from(this)
-
-            if (!fingerprintManager.hasEnrolledFingerprints()) {
-                Variable.fingerPrintYes = false
-                if (Variable.passwordCheck) {
-                    bindingAuth.floatingActionButtonOk.foreground =
-                        resources.getDrawable(R.drawable.ic_number_button_yes)
-                }else{
-                    bindingAuth.floatingActionButtonOk.visibility = View.GONE
-                }
-            } else {
-
-                if (Variable.passwordCheck) {
-                    bindingAuth.floatingActionButtonOk.foreground =
-                        resources.getDrawable(R.drawable.ic_number_button_yes)
-                }
-
-                Variable.fingerPrintYes = true
-            }
-
-        }else{
             if (Variable.passwordCheck) {
+                bindingAuth.textViewCreatePin.visibility = View.VISIBLE
+
                 bindingAuth.floatingActionButtonOk.foreground =
-                    resources.getDrawable(R.drawable.ic_number_button_yes)
-            }else{
+                    ContextCompat.getDrawable(this, R.drawable.ic_number_button_yes)
+            } else {
                 bindingAuth.floatingActionButtonOk.visibility = View.GONE
             }
+        }else{
+
+            bindingAuth.floatingActionButtonOk.visibility = View.VISIBLE
+
+            bindingAuth.floatingActionButtonOk.foreground =
+                ContextCompat.getDrawable(this, R.drawable.ic_baseline_fingerprint)
         }
-
-
-
-
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        dbManagerAuth.closeDataBase()
 
-        if (Variable.auth) {
-            finish()
-        }
+    private fun checkBiometric() {
+
+        val prompt = BiometricPrompt.Builder(this)
+            .setTitle("Авторизация по отпечатку пальца")
+            .setDescription("Используйте свой отпечаток для авторизации")
+            .setNegativeButton("Отмена", this.mainExecutor
+            ) { _, _ ->             Variable.fingerPrintYes = true; fingerPrintButton()
+            }
+            .build()
+
+        prompt.authenticate(
+            getCancellationSignal(),this.mainExecutor,
+            object : BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(this@AuthClass, "Не распознан." , Toast.LENGTH_LONG).show()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+
+                    if (errorCode != BiometricPrompt.BIOMETRIC_ERROR_NO_BIOMETRICS  &&
+                        errorCode != BiometricPrompt.BIOMETRIC_ERROR_HW_UNAVAILABLE &&
+                        errorCode != BiometricPrompt.BIOMETRIC_ERROR_HW_NOT_PRESENT &&
+                        errorCode != BiometricPrompt.BIOMETRIC_ERROR_CANCELED &&
+                        errorCode != BiometricPrompt.BIOMETRIC_ERROR_NO_DEVICE_CREDENTIAL
+                    ) {Variable.fingerPrintYes = true; fingerPrintButton() }
+
+                }
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                    val main = Intent(this@AuthClass, MainActivity::class.java)
+                    ContextCompat.startActivity(this@AuthClass,main, null)
+                    Variable.auth=true
+                }
+            }
+        )
     }
 
-
-
+    private fun getCancellationSignal(): CancellationSignal {
+        val cancelSignal = CancellationSignal()
+        cancelSignal.setOnCancelListener {
+        }
+        return cancelSignal
+    }
 
 
 }
+
+

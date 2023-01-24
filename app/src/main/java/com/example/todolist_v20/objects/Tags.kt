@@ -3,12 +3,11 @@ package com.example.todolist_v20.objects
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.TextView
-import com.example.todolist_v20.classes.EditActivity
 import com.example.todolist_v20.classes.bindingEdit
 import com.example.todolist_v20.dataBase.dbContent.VariableDbContent
 import com.example.todolist_v20.fragments.bindingMainFragment
-import com.example.todolist_v20.fragments.dbManager
 import com.example.todolist_v20.fragments.rcAdapter
+import com.example.todolist_v20.objects.Variable.dbManager
 
 object Tags {
 

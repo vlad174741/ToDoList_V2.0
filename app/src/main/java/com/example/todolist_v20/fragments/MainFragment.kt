@@ -18,6 +18,7 @@ import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataBase.dbContent.VariableDbContent
 import com.example.todolist_v20.databinding.FragmentMainBinding
 import com.example.todolist_v20.objects.Tags
+import com.example.todolist_v20.objects.Variable.dbManager
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingMainFragment: FragmentMainBinding
@@ -25,7 +26,6 @@ lateinit var bindingMainFragment: FragmentMainBinding
 lateinit var rcAdapter: RecyclerViewAdapter
 
 @SuppressLint("StaticFieldLeak")
-lateinit var dbManager: DataBaseManager
 
 
 

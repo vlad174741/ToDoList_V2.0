@@ -17,7 +17,8 @@ import com.example.todolist_v20.dataBase.dbContent.MyIntentConstant
 import com.example.todolist_v20.dataClass.DataRcView
 import com.example.todolist_v20.databinding.PatternForRecyclerViewBinding
 import com.example.todolist_v20.fragments.MainFragment
-import com.example.todolist_v20.fragments.dbManager
+import com.example.todolist_v20.objects.Variable.dbManager
+import com.example.todolist_v20.objects.Variable.intentVar
 
 //private val handler = Handler(Looper.getMainLooper())
 
@@ -191,7 +192,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
         //Кнопка редактирования заметки
         holder.bindingRcView.imageViewAdd.setOnClickListener {
 
-            val editActivity = Intent(contextRC, EditActivity::class.java).apply {
+            intentVar = Intent(contextRC, EditActivity::class.java).apply {
 
                 putExtra(MyIntentConstant.INTENT_TITLE_KEY,itemList.title)
                 putExtra(MyIntentConstant.INTENT_SUBTITLE_KEY,itemList.subtitle)
@@ -200,7 +201,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
                 putExtra(MyIntentConstant.INTENT_ID_KEY,itemList.idItem)
 
             }
-            contextRC.startActivity(editActivity)
+            contextRC.startActivity(intentVar)
         }
     }
 
