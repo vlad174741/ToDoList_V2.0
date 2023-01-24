@@ -3,6 +3,7 @@ package com.example.todolist_v20.objects
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
 import android.os.StrictMode
@@ -69,13 +70,8 @@ object PhotoAndImage {
 
 
     fun sendMessageGallery(context: Context, file: File){
-        val intentGallery = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
-
-            data = Uri.fromFile(file)
-            Log.d("idDir", "$filePhoto.toString()")
-
-        }
-        context.sendBroadcast(intentGallery)
+        MediaScannerConnection.scanFile(context, arrayOf(file.toString()),
+            null, null)
     }
 
 }

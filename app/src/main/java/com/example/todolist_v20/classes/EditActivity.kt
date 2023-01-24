@@ -97,6 +97,13 @@ class EditActivity: BasicActivity() {
         imageName =  bindingEdit.editTextEditActivityTitle.text.toString()
 
         checkImage()
+        buttonsEditActivity()
+
+
+    }
+
+
+    private fun buttonsEditActivity(){
 
         bindingEdit.apply {
             //Кнопка для сохранения заметки
@@ -198,9 +205,8 @@ class EditActivity: BasicActivity() {
 
 
         }
+
     }
-
-
 
 
 
@@ -223,6 +229,7 @@ class EditActivity: BasicActivity() {
         alertDialog.show()
     }
 
+
     private fun checkImage() {
         bindingEdit.apply {
             if (imageViewActivityEdit.drawable != null) {
@@ -239,9 +246,11 @@ class EditActivity: BasicActivity() {
         }
     }
 
+
     private fun checkTagSelection(button: RadioButton, tag: String){
         Tags.tagSelectEdit(button, tag, bindingEdit.textViewTagCardEditActivity)
     }
+
 
     private fun checkSavePhoto(){
 
@@ -253,7 +262,6 @@ class EditActivity: BasicActivity() {
         }else{
             Variable.imgURI = PhotoAndImage.uri.toString()
         }
-
     }
 
     private fun checkDeletePhoto(){
@@ -271,28 +279,19 @@ class EditActivity: BasicActivity() {
                     PhotoAndImage.uri = Uri.parse("")
                 }else{
                     Log.d("idDir", "image data base is empty")
-
-
                 }
             }else{
                 Log.d("idDir", "image data base is empty")
-
-
             }
         }
     }
 
     private fun saveTag(): String{
-        tag = if(Tags.dbTag != "empty") {
-            Tags.dbTag
 
-        } else {
-
-            if (Tags.dbTag == "empty") {
-                "empty"
-            } else {
-                i.getStringExtra(MyIntentConstant.INTENT_TAG_KEY).toString()
-            }
+        tag = if(Tags.dbTag != "empty") { Tags.dbTag }
+        else {
+            if (Tags.dbTag == "empty") { "empty" }
+            else { i.getStringExtra(MyIntentConstant.INTENT_TAG_KEY).toString() }
         }
         Log.d("idDir", "save tag:$tag")
 
@@ -316,16 +315,16 @@ class EditActivity: BasicActivity() {
         } else {
             Log.d("idDir", "Permission Already Granted")
             PhotoAndImage.takeFullPhoto(getResultCapturePhoto, imageName)
-
         }
     }
 
     private val requestMultiplePermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+                permissions -> permissions.entries.forEach {
                 Log.d("idDir", "${it.key} = ${it.value}")
             }
-            if (permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true) {
+            if (permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true &&
+                permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true) {
                 Log.d("idDir", "Permission granted")
                 PhotoAndImage.takeFullPhoto(getResultCapturePhoto, imageName)
 
