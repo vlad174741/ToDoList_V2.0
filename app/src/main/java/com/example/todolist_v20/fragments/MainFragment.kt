@@ -132,21 +132,21 @@ class MainFragment : Fragment() {
 
     }
 
+    fun scrollRcView(){
+        bindingMainFragment.recyclerViewMainFragment.scrollToPosition(rcAdapter.itemCount - 0)
+    }
+
 
     override fun onResume() {
         super.onResume()
         val dataList = dbManager.readDataBase(Variable.username, VariableDbContent.selectionColumnAccount)
-        val dataListTag = dbManager.readDataBase(Tags.mainFragmentTag, VariableDbContent.selectionColumnTag)
+
+        if(rcAdapter.itemSelectList.isEmpty()){ rcAdapter.updateAdapter(dataList)}
+
+
 
 
         Log.d("id", Variable.username)
-
-        if (Tags.mainFragmentTag != "") {
-            rcAdapter.updateAdapter(dataListTag)
-        }else{
-            rcAdapter.updateAdapter(dataList)
-        }
-        rcAdapter.clearItemSelect()
 
 
 

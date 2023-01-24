@@ -51,6 +51,8 @@ object Tags {
                 val dataList = dbManager.readDataBase(Variable.username, VariableDbContent.selectionColumnAccount)
                 mainFragmentTag = ""
                 rcAdapter.updateAdapter(dataList)
+                rcAdapter.clearItemSelect()
+
 
 
             }else {
@@ -60,6 +62,7 @@ object Tags {
                 rcAdapter.updateAdapter(dataList)
                 tagUsingMainFragment = tag
                 mainFragmentTag=result
+                rcAdapter.clearItemSelect()
 
                 Log.d("tag", result)
             }

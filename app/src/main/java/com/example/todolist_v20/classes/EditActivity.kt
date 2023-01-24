@@ -103,6 +103,7 @@ class EditActivity: BasicActivity() {
             buttonSaveEditActivity.setOnClickListener {
                 val title = editTextEditActivityTitle.text.toString()
                 val subtitle = editTextEditActivitySubtitle.text.toString()
+
                 checkSavePhoto()
                 dataBaseManager.updateToDataBase(title, subtitle, id, saveTag(), Variable.imgURI)
                 Variable.imgURI = "empty"
@@ -110,6 +111,7 @@ class EditActivity: BasicActivity() {
                 PhotoAndImage.uri = Uri.parse("")
                 Tags.dbTag = "empty"
                 finish()
+
 
             }
             //Кнопка для скрытия окна с изображением

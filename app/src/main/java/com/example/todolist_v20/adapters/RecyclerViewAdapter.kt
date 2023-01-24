@@ -26,7 +26,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
     :RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderAdapter>() {
 
     private var listArray = listMain
-    private var isEnable = false
+    var isEnable = false
     val itemSelectList = mutableListOf<Int>()
 
 
@@ -40,6 +40,10 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
             bindingRcView.textViewTitleRcView.text = list.title
             Log.d("rcState", "ViewHolderAdapter/fun holderRc")
 
+            if(bindingRcView.textViewTitleRcView.text == "вал"){
+                bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_check)
+            }
+
         }
     }
 
@@ -52,10 +56,10 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
     }
 
     override fun onBindViewHolder(holder: ViewHolderAdapter, position: Int) {
-        Log.d("rcState", "${Variable.prevPositionRcView}")
+        Log.d("rcState", "onBindViewHolder")
 
-        holder.holderRc(listArray[position])
         val pos = holder.adapterPosition
+        holder.holderRc(listArray[position])
         val itemList = listArray[position]
         holder.bindingRcView.cardRedactItemRc.visibility = View.GONE
 
@@ -63,23 +67,29 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
 
 
 
-        if (!isEnable){
-            if(itemSelectList.isEmpty()) {
+
+
+
+            if (!isEnable){
                 holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_delete)
-            }
+
 
         }else {
-            if(itemSelectList.isEmpty()) {
 
-
+            if( !itemList.select ) {
                 holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_unchecked)
                 holder.bindingRcView.cardRedactItemRc.visibility = View.GONE
+            }else{
+                holder.bindingRcView.imageViewDelete.setImageResource(R.drawable.ic_check)
 
             }
+
         }
 
 
-        //Обрабочик долгого нажатия на элемент RecyclerView
+
+
+            //Обрабочик долгого нажатия на элемент RecyclerView
         // (запускае выбор элементов для множественного удаления)
         holder.itemView.setOnLongClickListener{
 
@@ -119,6 +129,7 @@ class RecyclerViewAdapter(listMain:ArrayList<DataRcView>, private var contextRC:
                         Variable.prevPositionRcView = -1
 
                     } else {
+
                         if (Variable.prevPositionRcView!=-1) {
                             notifyItemChanged(Variable.prevPositionRcView)
                             holder.bindingRcView.cardRedactItemRc.visibility = View.VISIBLE

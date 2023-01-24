@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.todolist_v20.adapters.RecyclerViewAdapter
 import com.example.todolist_v20.classes.ViewModelMy
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 import com.example.todolist_v20.dataClass.Data
@@ -264,6 +263,8 @@ class EditFragment : Fragment() {
                     radioGroupTegEditFragment.clearCheck()
                     scrollViewEditFragment.smoothScrollTo(0, textViewTagCardEditFragment.top)
 
+                    MainFragment().scrollRcView()
+
                 }
                 model.plant.value = Data("Info22", "UseCase22")
             }
@@ -283,7 +284,8 @@ class EditFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("liveFragment", "onResume")
-        MainFragment().onResume()
+        if(rcAdapter.isEnable){ rcAdapter.clearItemSelect()}
+
 
 
 

@@ -101,6 +101,8 @@ class OptionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         dbManagerAuthOptionFragment.openDataBase()
+        if(rcAdapter.isEnable){ rcAdapter.clearItemSelect()}
+
 
 
     }
