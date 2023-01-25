@@ -10,12 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.todolist_v20.R
-import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.databinding.AuthPinFormBinding
-import com.example.todolist_v20.objects.SharedPreference
 import com.example.todolist_v20.objects.Variable
 import com.example.todolist_v20.objects.Variable.dbManagerAuth
-import com.example.todolist_v20.objects.Variable.intentVar
 
 lateinit var bindingAuth:AuthPinFormBinding
 
@@ -24,10 +21,7 @@ class AuthClass: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dbManagerAuth = DataBaseManagerAuth(this)
-        intentVar = Intent(this, MainActivity::class.java)
 
-        checkUser()
         bindingAuth = AuthPinFormBinding.inflate(layoutInflater)
         setContentView(bindingAuth.root)
         if(!Variable.passwordCheck){ checkBiometric()}
@@ -143,7 +137,8 @@ class AuthClass: AppCompatActivity() {
             if (bindingAuth.textViewPin.length() == 4) {
 
                 if (bindingAuth.textViewPin.text.toString() == Variable.password) {
-                    startActivity(intentVar)
+                    val intentMainActivity = Intent(this, MainActivity::class.java)
+                    startActivity(intentMainActivity)
                     finish()
                 } else {
                     bindingAuth.textViewPin.text = ""
@@ -151,24 +146,6 @@ class AuthClass: AppCompatActivity() {
             }
         }
     }
-
-
-    private fun checkUser(){
-        SharedPreference.preferenceUsername(this)
-        dbManagerAuth.openDataBase()
-        dbManagerAuth.checkAccount()
-
-        when(Variable.prefTheme){
-            0-> ChangeTheme().themeChange(0, delegate)
-            1-> ChangeTheme().themeChange(1, delegate)
-            2-> ChangeTheme().themeChange(2, delegate)
-        }
-
-        if (Variable.auth){
-            startActivity(intentVar)
-        }
-    }
-
 
 
     private fun fingerPrintButton(){
@@ -193,7 +170,6 @@ class AuthClass: AppCompatActivity() {
         }
 
     }
-
 
     private fun checkBiometric() {
 

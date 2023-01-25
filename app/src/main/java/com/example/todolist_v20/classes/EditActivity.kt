@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.net.toUri
@@ -34,7 +35,7 @@ var id = 0
 
 
 
-class EditActivity: BasicActivity() {
+class EditActivity: AppCompatActivity() {
 
     private var dataBaseManager = DataBaseManager(this)
 
@@ -55,6 +56,8 @@ class EditActivity: BasicActivity() {
                     Log.d("idDir", "delete capture photo")
             }
         }
+        bindingEdit.floatingActionButtonAddPhotoEditActivity.isEnabled = true
+
     }
 
     private val getResultGalleryPhoto = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -66,7 +69,10 @@ class EditActivity: BasicActivity() {
             Variable.imgURI = it.data?.data.toString()
             checkImage()
 
+
         }
+        bindingEdit.floatingActionButtonAddImageEditActivity.isEnabled = true
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,6 +104,50 @@ class EditActivity: BasicActivity() {
 
         checkImage()
         buttonsEditActivity()
+        Log.d("liveActivity", "EditActivity.onCreate")
+
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("liveActivity", "EditActivity.onStart")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("liveActivity", "EditActivity.onResume")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("liveActivity", "EditActivity.onPause")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("liveActivity", "EditActivity.onStop")
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("liveActivity", "EditActivity.onRestart")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Variable.imgURI = "empty"
+        uriImageDb = Uri.parse("")
+        PhotoAndImage.uri = Uri.parse("")
+        Tags.dbTag = "empty"
+        dataBaseManager.closeDataBase()
+        Log.d("liveActivity", "EditActivity.onDestroy")
 
 
     }
@@ -108,6 +158,7 @@ class EditActivity: BasicActivity() {
         bindingEdit.apply {
             //Кнопка для сохранения заметки
             buttonSaveEditActivity.setOnClickListener {
+                buttonSaveEditActivity.isEnabled = false
                 val title = editTextEditActivityTitle.text.toString()
                 val subtitle = editTextEditActivitySubtitle.text.toString()
 
@@ -156,10 +207,12 @@ class EditActivity: BasicActivity() {
 
             //Кнопка для добавления изображения через галерею
             floatingActionButtonAddImageEditActivity.setOnClickListener {
+                floatingActionButtonAddImageEditActivity.isEnabled = false
                 PhotoAndImage.chooseImageGallery(getResultGalleryPhoto)
             }
             //Кнопка для добавления изображения через камеру
             floatingActionButtonAddPhotoEditActivity.setOnClickListener {
+                floatingActionButtonAddPhotoEditActivity.isEnabled = false
                 checkPermissions()
             }
             //Кнопка для удаления изображения
@@ -333,13 +386,4 @@ class EditActivity: BasicActivity() {
             }
         }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Variable.imgURI = "empty"
-        uriImageDb = Uri.parse("")
-        PhotoAndImage.uri = Uri.parse("")
-        Tags.dbTag = "empty"
-        dataBaseManager.closeDataBase()
-
-    }
 }

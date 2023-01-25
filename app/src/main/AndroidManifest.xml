@@ -24,11 +24,8 @@
         >
 
 
-        <activity
-            android:name=".classes.EditActivity"
-            android:label="@string/option"
-            android:parentActivityName=".classes.MainActivity"
-
+        <activity android:name=".classes.EditActivity"
+            android:launchMode="singleTask"
             />
 
         <activity
@@ -37,10 +34,13 @@
 
             />
 
-
-
         <activity
             android:name=".classes.AuthClass"
+            android:launchMode="singleTask"
+            />
+
+
+        <activity android:name=".classes.BasicActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +49,9 @@
             </intent-filter>
 
         </activity>
+
+
+
 
 
 

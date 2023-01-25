@@ -1,6 +1,5 @@
 package com.example.todolist_v20.objects
 
-import android.content.Intent
 import com.example.todolist_v20.dataBase.dbAuthorization.DataBaseManagerAuth
 import com.example.todolist_v20.dataBase.dbContent.DataBaseManager
 
@@ -9,7 +8,6 @@ object Variable {
 
     lateinit var dbManager: DataBaseManager
     lateinit var dbManagerAuth: DataBaseManagerAuth
-    lateinit var intentVar: Intent
 
 
     var check = 0

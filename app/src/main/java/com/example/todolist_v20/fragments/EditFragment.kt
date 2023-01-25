@@ -58,6 +58,7 @@ class EditFragment : Fragment() {
                 Log.d("idDir", "delete capture photo")
             }
         }
+        bindingEditFragment.floatingActionButtonAddPhotoEditFragment.isEnabled = true
     }
 
     private val getResultGalleryPhoto = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -70,6 +71,8 @@ class EditFragment : Fragment() {
             checkImage()
 
         }
+        bindingEditFragment.floatingActionButtonAddImageEditFragment.isEnabled = true
+
     }
 
 
@@ -200,11 +203,13 @@ class EditFragment : Fragment() {
 
             //Кнопка для добавления изображения через галерею
             floatingActionButtonAddImageEditFragment.setOnClickListener {
+                floatingActionButtonAddImageEditFragment.isEnabled = false
                 PhotoAndImage.chooseImageGallery(getResultGalleryPhoto)
             }
             //Кнопка для добавления изображения через камеру
             floatingActionButtonAddPhotoEditFragment.setOnClickListener {
-              checkPermissions()
+               floatingActionButtonAddPhotoEditFragment.isEnabled = false
+                checkPermissions()
             }
             //Кнопка для скрытия окна с изображением
             floatingActionButtonDeletePhotoEditFragment.setOnClickListener {
