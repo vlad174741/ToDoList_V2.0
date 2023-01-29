@@ -13,8 +13,8 @@ object Tags {
 
     //Теги
     private lateinit var tagButtonActive: RadioButton
-    private var tagUsingMainFragment = ""
-    var mainFragmentTag = ""
+    var tagUsingMainFragment = ""
+    private var mainFragmentTag = ""
 
 
     var dbTag = "empty"
@@ -27,7 +27,7 @@ object Tags {
 
 
 
-     fun tagSelectEdit(button: RadioButton, tag: String, textView: TextView){
+    fun tagSelectEdit(button: RadioButton, tag: String, textView: TextView){
         if (button.isChecked) {
             if (tag == "empty"){
                 dbTag = tag
@@ -51,25 +51,26 @@ object Tags {
                 mainFragmentTag = ""
                 rcAdapter.updateAdapter(dataList)
                 rcAdapter.clearItemSelect()
+                Variable.prevPositionRcView = -1
+
 
 
 
             }else {
                 tagButtonActive = button
-                val result = tag
-                val dataList = dbManager.readDataBase(result, VariableDbContent.selectionColumnTag)
+                val dataList = dbManager.readDataBase(tag, VariableDbContent.selectionColumnTag)
                 rcAdapter.updateAdapter(dataList)
                 tagUsingMainFragment = tag
-                mainFragmentTag=result
+                mainFragmentTag = tag
                 rcAdapter.clearItemSelect()
 
-                Log.d("tag", result)
+                Log.d("tag", tag)
             }
         }
     }
 
 
-     fun checkTagEditActivity(tag: String){
+    fun checkTagEditActivity(tag: String){
         when (tag){
             "empty"->{
                 bindingEdit.textViewTagCardEditActivity.text = "Нет фильтра"}
@@ -92,6 +93,11 @@ object Tags {
                 radioButtonEditActivityTagSport.isChecked = true
                 textViewTagCardEditActivity.text = radioButtonEditActivityTagSport.text}}
         }
+    }
+
+    fun checkTagMainFragment(){
+        val dataList = dbManager.readDataBase(tagUsingMainFragment, VariableDbContent.selectionColumnTag)
+        rcAdapter.updateAdapter(dataList)
     }
 
 

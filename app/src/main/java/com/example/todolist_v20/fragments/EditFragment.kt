@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -27,12 +26,15 @@ import com.example.todolist_v20.dataClass.Data
 import com.example.todolist_v20.databinding.FragmentEditBinding
 import com.example.todolist_v20.objects.PhotoAndImage
 import com.example.todolist_v20.objects.Tags
+import com.example.todolist_v20.objects.ToastText
 import com.example.todolist_v20.objects.Variable
+import com.example.todolist_v20.objects.Variable.dbManager
 
 
 @SuppressLint("StaticFieldLeak")
 lateinit var bindingEditFragment: FragmentEditBinding
 private lateinit var contextEditFragment: Context
+lateinit var hideKeyboard: InputMethodManager
 
 
 
@@ -78,13 +80,13 @@ class EditFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("liveFragment", "onAttach")
+        Log.d("liveFragment", "EditFragment.onAttach")
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("liveFragment", "onCreate")
+        Log.d("liveFragment", "EditFragment.onCreate")
         contextEditFragment = activity as AppCompatActivity
 
 
@@ -93,10 +95,159 @@ class EditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         bindingEditFragment = FragmentEditBinding.inflate(inflater, container, false)
-        Log.d("liveFragment", "onCreateView")
+        Log.d("liveFragment", "EditFragment.onCreateView")
         return bindingEditFragment.root
     }
 
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val dbManager = DataBaseManager(contextEditFragment)
+        hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        dbManager.openDataBase()
+        checkImage()
+        buttonsEditFragment()
+        Log.d("liveFragment", "EditFragment.onViewCreated")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("liveFragment", "EditFragment.onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("liveFragment", "EditFragment.onResume")
+        if(rcAdapter.isEnable){ rcAdapter.clearItemSelect()}
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("liveFragment", "EditFragment.onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("liveFragment", "EditFragment.onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("liveFragment", "EditFragment.onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("liveFragment", "EditFragment.onDestroy")
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("liveFragment", "EditFragment.onDetach")
+    }
+
+
+    private fun buttonsEditFragment(){
+
+        bindingEditFragment.apply {
+
+            textViewTagCardEditFragment.setOnClickListener {
+
+                radioGroupTegEditFragment.clearCheck()
+                textViewTagCardEditFragment.text = "Нет фильтра"
+                Tags.dbTag = "empty"
+
+                if (scrollTagWindowEditFragment.visibility == View.GONE) {
+                    scrollTagWindowEditFragment.visibility = View.VISIBLE
+                }else{
+                    scrollTagWindowEditFragment.visibility = View.GONE
+                }
+            }
+
+            //Кнопка для выбора действий для изображения
+            floatingActionButtonActionImageEditFragment.setOnClickListener {
+                if (actionImageButtonEditFragment.visibility == View.GONE) {
+                    actionImageButtonEditFragment.visibility = View.VISIBLE
+                }else{
+                    actionImageButtonEditFragment.visibility = View.GONE
+                }
+            }
+
+            //Кнопка для добавления изображения через галерею
+            floatingActionButtonAddImageEditFragment.setOnClickListener {
+                floatingActionButtonAddImageEditFragment.isEnabled = false
+                PhotoAndImage.chooseImageGallery(getResultGalleryPhoto)
+            }
+            //Кнопка для добавления изображения через камеру
+            floatingActionButtonAddPhotoEditFragment.setOnClickListener {
+                floatingActionButtonAddPhotoEditFragment.isEnabled = false
+                checkPermissions()
+            }
+            //Кнопка для скрытия окна с изображением
+            floatingActionButtonDeletePhotoEditFragment.setOnClickListener {
+                checkSavePhoto()
+                cardViewImageEditFragment.visibility = View.GONE
+                imageViewEditFragment.setImageDrawable(null)
+                checkImage()
+                Variable.imgURI = "empty"
+            }
+            radioButtonEditFragmentTagHome.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagHome, Tags.homeTag)
+            }
+            radioButtonEditFragmentTagShop.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagShop, Tags.shopTag)
+            }
+            radioButtonEditFragmentTagBank.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagBank, Tags.bankTag)
+            }
+            radioButtonEditFragmentTagWork.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagWork, Tags.workTag)
+            }
+            radioButtonEditFragmentTagWeekend.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagWeekend, Tags.weekendTag)
+            }
+            radioButtonEditFragmentTagSport.setOnClickListener {
+                checkTag(radioButtonEditFragmentTagSport, Tags.sportTag)
+            }
+
+            //Кнопка для сохранения заметки
+            buttonSaveEditFragment.setOnClickListener{
+
+                val title = editTextEditFragmentTitle.text
+                val subtitle = editTextEditFragmentSubtitle.text
+
+                if (title.isEmpty()){
+                    ToastText.shortToast(contextEditFragment, "Введите заголовок")
+                }else{
+                    ToastText.shortToast(contextEditFragment, "Сохраняем")
+                    hideKeyboard.hideSoftInputFromWindow(view!!.windowToken, 0)
+
+                    dbManager.insertToDataBase(
+                        title.toString(),subtitle.toString(), Tags.dbTag, Variable.imgURI)
+
+                    PhotoAndImage.uri = Uri.parse("")
+                    Variable.imgURI = "empty"
+                    Tags.dbTag = "empty"
+                    title.clear()
+                    subtitle.clear()
+
+                    cardViewImageEditFragment.visibility = View.GONE
+                    imageViewEditFragment.setImageDrawable(null)
+                    checkImage()
+                    textViewTagCardEditFragment.text = "Нет фильтра"
+                    scrollTagWindowEditFragment.visibility = View.GONE
+                    radioGroupTegEditFragment.clearCheck()
+                    scrollViewEditFragment.smoothScrollTo(0, textViewTagCardEditFragment.top)
+
+                    MainFragment().scrollRcView()
+                }
+                model.plant.value = Data("Info22", "UseCase22")
+            }
+        }
+    }
 
     private fun takeAndSavePhoto(){
         PhotoAndImage.takeFullPhoto(getResultCapturePhoto, PhotoAndImage.FILE_NAME)
@@ -164,168 +315,6 @@ class EditFragment : Fragment() {
             }
         }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val dbManager = DataBaseManager(contextEditFragment)
-        dbManager.openDataBase()
-        checkImage()
-        val hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        Log.d("liveFragment", "onViewCreated")
-
-
-        bindingEditFragment.apply {
-
-            textViewTagCardEditFragment.setOnClickListener {
-
-                radioGroupTegEditFragment.clearCheck()
-                textViewTagCardEditFragment.text = "Нет фильтра"
-                Tags.dbTag = "empty"
-
-                if (scrollTagWindowEditFragment.visibility == View.GONE) {
-                    scrollTagWindowEditFragment.visibility = View.VISIBLE
-                }else{
-                    scrollTagWindowEditFragment.visibility = View.GONE
-                }
-            }
-
-
-
-            //Кнопка для выбора действий для изображения
-            floatingActionButtonActionImageEditFragment.setOnClickListener {
-                        if (actionImageButtonEditFragment.visibility == View.GONE) {
-                            actionImageButtonEditFragment.visibility = View.VISIBLE
-                        }else{
-                            actionImageButtonEditFragment.visibility = View.GONE
-                        }
-            }
-
-            //Кнопка для добавления изображения через галерею
-            floatingActionButtonAddImageEditFragment.setOnClickListener {
-                floatingActionButtonAddImageEditFragment.isEnabled = false
-                PhotoAndImage.chooseImageGallery(getResultGalleryPhoto)
-            }
-            //Кнопка для добавления изображения через камеру
-            floatingActionButtonAddPhotoEditFragment.setOnClickListener {
-               floatingActionButtonAddPhotoEditFragment.isEnabled = false
-                checkPermissions()
-            }
-            //Кнопка для скрытия окна с изображением
-            floatingActionButtonDeletePhotoEditFragment.setOnClickListener {
-                checkSavePhoto()
-                cardViewImageEditFragment.visibility = View.GONE
-                imageViewEditFragment.setImageDrawable(null)
-                checkImage()
-                Variable.imgURI = "empty"
-            }
-            radioButtonEditFragmentTagHome.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagHome, Tags.homeTag)
-            }
-            radioButtonEditFragmentTagShop.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagShop, Tags.shopTag)
-            }
-            radioButtonEditFragmentTagBank.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagBank, Tags.bankTag)
-            }
-            radioButtonEditFragmentTagWork.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagWork, Tags.workTag)
-            }
-            radioButtonEditFragmentTagWeekend.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagWeekend, Tags.weekendTag)
-            }
-            radioButtonEditFragmentTagSport.setOnClickListener {
-                checkTag(radioButtonEditFragmentTagSport, Tags.sportTag)
-            }
-
-            //Кнопка для сохранения заметки
-            buttonSaveEditFragment.setOnClickListener{
-
-                val title = editTextEditFragmentTitle.text
-                val subtitle = editTextEditFragmentSubtitle.text
-
-                if (title.isEmpty()){
-                    Toast.makeText(contextEditFragment, "Введите заголовок", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(contextEditFragment, "Сохраняем", Toast.LENGTH_SHORT).show()
-                    hideKeyboard.hideSoftInputFromWindow(view.windowToken, 0)
-
-                    dbManager.insertToDataBase(
-                        title.toString(),subtitle.toString(), Tags.dbTag, Variable.imgURI
-                    )
-
-                    PhotoAndImage.uri = Uri.parse("")
-                    Variable.imgURI = "empty"
-                    Tags.dbTag = "empty"
-                    title.clear()
-                    subtitle.clear()
-
-                    cardViewImageEditFragment.visibility = View.GONE
-                    imageViewEditFragment.setImageDrawable(null)
-                    checkImage()
-                    textViewTagCardEditFragment.text = "Нет фильтра"
-                    scrollTagWindowEditFragment.visibility = View.GONE
-                    radioGroupTegEditFragment.clearCheck()
-                    scrollViewEditFragment.smoothScrollTo(0, textViewTagCardEditFragment.top)
-
-                    MainFragment().scrollRcView()
-
-                }
-                model.plant.value = Data("Info22", "UseCase22")
-            }
-        }
-
-    }
-
-
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("liveFragment", "onStart")
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("liveFragment", "onResume")
-        if(rcAdapter.isEnable){ rcAdapter.clearItemSelect()}
-
-
-
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("liveFragment", "onPause")
-
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("liveFragment", "onStop")
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("liveFragment", "onDestroyView")
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("liveFragment", "onDestroy")
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("liveFragment", "onDetach")
-
-    }
 
     companion object {
         @JvmStatic

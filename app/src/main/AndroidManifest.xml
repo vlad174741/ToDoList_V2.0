@@ -26,21 +26,28 @@
 
         <activity android:name=".classes.EditActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
 
         <activity
             android:name=".classes.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+
 
             />
 
         <activity
             android:name=".classes.AuthClass"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+
             />
 
 
         <activity android:name=".classes.BasicActivity"
+            android:screenOrientation="portrait"
+
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
